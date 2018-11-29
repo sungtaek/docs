@@ -1,0 +1,1757 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Bixby Home Card Programming Guide &#8212; BixbyHome Guide  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="bixby-home-card-programming-guide">
+<span id="bixby-home-card-programming-guide"></span><h1>Bixby Home Card Programming Guide<a class="headerlink" href="#bixby-home-card-programming-guide" title="Permalink to this headline">¶</a></h1>
+<p>[TOC]</p>
+</div>
+<div class="section" id="developing-cards-on-bixby-home">
+<span id="developing-cards-on-bixby-home"></span><h1>1. Developing Cards on Bixby Home<a class="headerlink" href="#developing-cards-on-bixby-home" title="Permalink to this headline">¶</a></h1>
+<p>Bixby Home displays various cards according to user behavior patterns.</p>
+<p>Developers can use “Card SDK” in their application to develop cards which can be displayed on Bixby Home application.</p>
+<p>Developers have to register their card information at Bixby Home partner portal site to start the card development.</p>
+<p>Only registered card can be displayed on Bixby Home.</p>
+<p><img alt="" src="media/image1.png" />{width=”5.9006944444444445in” height=”3.25750656167979in”}</p>
+</div>
+<div class="section" id="application-based-integration-using-card-sdk-library">
+<span id="application-based-integration-using-card-sdk-library"></span><h1>2. Application based integration : using Card SDK library.<a class="headerlink" href="#application-based-integration-using-card-sdk-library" title="Permalink to this headline">¶</a></h1>
+<p>This chapter describes how to make use of SDK to create a card.</p>
+<p>Pre-condition:</p>
+<ul class="simple">
+<li>Check Installed Bixby Home apk version. Refer to below table.</li>
+<li>Include SDK library (spage-card-sdk-v[<em>version</em>].aar) file in your application.</li>
+</ul>
+<p>| API spec. version | SDK library version | Bixby Home version Name | Release Date |
+| —————– | ——————- | ———————– | ———— |
+| v1                | 1.0.0               |                         |              |
+| v1                | 1.0.1               | since 2.1.2.7           | Oct. 2017    |
+| v2                | 1.0.2               | since 2.1.6.0           | Jan. 2018    |
+| v3                | 1.0.2               | since 2.1.7.0           | Feb. 2018    |
+| v4                | 1.0.3               | since 2.1.9.0           | Mar. 2018    |
+| v5                | 1.1.1               | since 2.2.2.2           | Jul. 2018    |
+| v6                | 1.1.3               | since 2.2.4.0           | Sep. 2018    |
+| v7                | 1.2.1               | since 3.0.0.0           | Nov. 2018    |</p>
+<div class="section" id="selecting-template-type">
+<span id="selecting-template-type"></span><h2>2.1 Selecting Template type<a class="headerlink" href="#selecting-template-type" title="Permalink to this headline">¶</a></h2>
+<p>Select the appropriate template type for your card’s look and feel. Your card view style is fixed by this template. Please refer to template guides (Bixby Home SDK UX document) for the detailed information.</p>
+</div>
+<div class="section" id="registering-card">
+<span id="registering-card"></span><h2>2.2 Registering Card<a class="headerlink" href="#registering-card" title="Permalink to this headline">¶</a></h2>
+<p>Register your card at CP portal site. Upon successful registration a unique Card ID will be provided. This Card ID will be used for the identification of your card.</p>
+<p>To register your card, please contact to Bixby Home partner portal, <a class="reference external" href="https://bixbyhome.samsungfeed.com">[https://bixbyhome.samsungfeed.com]</a>.</p>
+<p>Before registering the card to the site, Manifest side-loading scheme can be used for developing the cards. Refer to appendix 4.1 below.</p>
+</div>
+<div class="section" id="building-your-cards">
+<span id="building-your-cards"></span><h2>2.3 Building Your Cards<a class="headerlink" href="#building-your-cards" title="Permalink to this headline">¶</a></h2>
+<p>To display your cards in Bixby Home application, modify your application as mentioned below:</p>
+<div class="section" id="including-card-sdk-library">
+<span id="including-card-sdk-library"></span><h3><em>2.3.1 Including card sdk library</em><a class="headerlink" href="#including-card-sdk-library" title="Permalink to this headline">¶</a></h3>
+<p>Put Bixby Home SDK library files (spage-card-sdk-[version].aar and sdk-v1.0.0.jar) in “libs” folder on your application project. And modify your application build.gradle file to include this library like below.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dependencies</span> <span class="p">{</span>
+
+    <span class="n">implementation</span> <span class="n">fileTree</span><span class="p">(</span><span class="n">include</span><span class="p">:</span> \<span class="p">[</span><span class="s1">&#39;spage-card-sdk-\[version\].aar&#39;</span><span class="p">,</span> <span class="nb">dir</span><span class="p">:</span> <span class="s1">&#39;libs&#39;</span><span class="p">)</span>
+
+    <span class="o">...</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="modify-androidmanifest-xml">
+<span id="modify-androidmanifest-xml"></span><h3>2.3.2 <em>Modify “AndroidManifest.xml”</em><a class="headerlink" href="#modify-androidmanifest-xml" title="Permalink to this headline">¶</a></h3>
+<p>Modify your application’s manifest file as following guide.</p>
+<ul class="simple">
+<li>Provide the required permission, use “uses-permission” tag and add the permission as shown in the code block.</li>
+<li>Add your receiver (e.g. <strong>“.list.ListSampleProvider”</strong>) block in AndroidManifest.xml file.</li>
+<li>Add meta data element which should contain xml resource “cards”&nbsp;which should list up all cards id and template id provided in your app. Refer to section 2.3.8 for detailed explanation.</li>
+</ul>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;manifest xmlns:android=http://schemas.android.com/apk/res/android
+
+package=&quot;samsung.spage.sample&quot;&gt;
+
+// Add uses-permission
+
+&lt;uses-permission android:name=&quot;com.samsung.android.app.spage.permission.WRITE_CARD_DATA&quot; /&gt;
+
+&lt;application ... &gt;
+
+...
+
+// Add broadcast receiver
+
+&lt;receiver android:name=&quot;.list.ListSampleProvider&quot;&gt; //Add this receiver block
+
+&lt;intent-filter&gt;
+    &lt;action android:name=&quot;com.samsung.android.app.spage.action.CARD_UPDATE&quot; /&gt;
+    &lt;action android:name=&quot;com.samsung.android.app.spage.action.CARD_EVENT&quot; /&gt;
+    &lt;action android:name=&quot;com.samsung.android.app.spage.action.CARD_ENABLED&quot;/&gt;
+    &lt;action android:name=&quot;com.samsung.android.app.spage.action.CARD_DISABLED&quot;/&gt;
+&lt;/intent-filter&gt;
+
+&lt;/receiver&gt;
+
+// Add meta data for card list
+
+&lt;meta-data
+
+android:name=&quot;com.samsung.android.sdk.spage.card.info&quot;
+
+android:resource=&quot;@xml/cards&quot;/&gt;
+
+&lt;/application&gt;
+
+&lt;/manifest&gt;
+</pre></div>
+</div>
+<p>Before going further, please refer to section 2.4, which explains how and why to use Content Provider instead of Broadcast Receiver.</p>
+</div>
+<div class="section" id="check-feature-support">
+<span id="check-feature-support"></span><h3>2.3.3 <em>Check Feature Support</em><a class="headerlink" href="#check-feature-support" title="Permalink to this headline">¶</a></h3>
+<p>If you want to check if the feature is supported or not on your device, refer to SpageCardSdk class</p>
+<p><img alt="" src="media/image2.jpg" />{width=”2.5625in” height=”1.2401837270341207in”}</p>
+<ul class="simple">
+<li>Card developer should <strong>initialize</strong> the SDK by calling initialize method. If the device is not proper or Bixby Home is not installed, it will throw SsdkUnSupportedException. And it is to check for feature support by calling<strong>&nbsp;isFeatureEnabled</strong> method of SpageCardSdk before using the SDK in your application code.</li>
+<li>If <strong>initialize</strong>&nbsp;and <strong>isFeatureEnabled</strong>&nbsp;is success then the device and installed Bixby Home support the card feature.</li>
+<li>The method, <strong>getVersionCode</strong> and <strong>getVersionName</strong> returns the SDK library version code and name.</li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kt">boolean</span> <span class="nf">isBixbyHomeCardFeatureAvailable</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">SpageCardSdk</span> <span class="n">csdk</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SpageCardSdk</span><span class="o">();</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">csdk</span><span class="o">.</span><span class="na">initialize</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SsdkUnsupportedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Not supported device</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">csdk</span><span class="o">.</span><span class="na">isFeatureEnabled</span><span class="o">(</span><span class="n">FEATURE_TEMPLATE</span><span class="o">)</span> <span class="o">==</span> <span class="kc">false</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Bixby Home does not support the template card feature.</span>
+        <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>After the above code result is succeeded, when you need to check installed Bixby Home API version, refer to Appendix 4.4 ‘How to check Bixby Home API version”.</p>
+</div>
+<div class="section" id="create-the-provider-class">
+<span id="create-the-provider-class"></span><h3>2.3.4 <em>Create the Provider Class</em><a class="headerlink" href="#create-the-provider-class" title="Permalink to this headline">¶</a></h3>
+<p>Create your own provider class inherited from CardContentProvider class. With the help of this class, card developers can provide the contents to Bixby Home app which can display in the card.</p>
+<p>There are 3 methods which can be overridden in your provider class.</p>
+<ul class="simple">
+<li>onDisabled : This will be called if your card gets disabled in Bixby Home Settings.</li>
+<li>onEnabled : This will be called if your card gets enabled in Bixby Home Settings</li>
+<li>onUpdate : This will be called if your card should be updated. This is not called periodically, it is called when your card in Bixby Home needs to be refreshed.</li>
+<li>onReceiveEvent : This will be called for events like click which will be defined earlier when setting the content.</li>
+</ul>
+</div>
+<div class="section" id="override-onupdate-method">
+<span id="override-onupdate-method"></span><h3>2.3.5 <em>Override onUpdate Method</em><a class="headerlink" href="#override-onupdate-method" title="Permalink to this headline">¶</a></h3>
+<p>Whenever the card content needs to be refreshed “onUpdate” of the provider will be called. Prepare the contents to be displayed based on the template you had selected.</p>
+<p>onUpdate is not called on every entrance to Bixby Home. When some amount time (e.g. 2 minutes) has been passed after last visit, onUpdate will be called. Or when users do refresh manually by pulling down the Bixby Home screen, the method will be called also.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onUpdate</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">CardContentManager</span> <span class="n">cardContentManager</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">ids</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">MY_CARD_ID</span> <span class="o">=</span> <span class="mi">50000</span><span class="o">;</span> <span class="c1">// Issued from CP portal site upon successful registration of card.</span>
+
+    <span class="o">...</span>
+
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">id</span> <span class="o">:</span> <span class="n">ids</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">id</span> <span class="o">==</span> <span class="n">MY_CARD_ID</span><span class="o">)</span> <span class="o">{</span>
+
+            <span class="n">CardContent</span> <span class="n">listContent</span> <span class="o">=</span> <span class="n">getListDataContent</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+
+            <span class="n">cardContentManager</span><span class="o">.</span><span class="na">updateCardContent</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">listContent</span><span class="o">);</span>
+
+            <span class="k">return</span><span class="o">;</span>
+
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="preparing-contents-using-cardcontent-class">
+<span id="preparing-contents-using-cardcontent-class"></span><h3>2.3.6 <em>Preparing Contents Using CardContent Class</em><a class="headerlink" href="#preparing-contents-using-cardcontent-class" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Various data types are defined in SDK to prepare the contents.</li>
+<li>Create a CardContent object by providing the Card ID. CardContent provides put method which takes two arguments, one is the Field ID string and the other is FieldData object.</li>
+<li>For each field and matched data object type, refer to the UX template guide.</li>
+</ul>
+<p>More on FieldData will be explained in chapter 2.5.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">private</span> <span class="n">CardContent</span> <span class="nf">getListDataContent</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">int</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="n">CardContent</span> <span class="n">content</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CardContent</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+
+    <span class="n">Uri</span> <span class="n">imageUri</span> <span class="o">=</span> <span class="n">getUriToDrawable</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">worker</span><span class="o">);</span>
+
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">CardContent</span><span class="o">.</span><span class="na">FIELD_1</span><span class="o">,</span> <span class="k">new</span> <span class="n">ImageData</span><span class="o">().</span><span class="na">setImageUri</span><span class="o">(</span><span class="n">imageUri</span><span class="o">.</span><span class="na">toString</span><span class="o">()));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">CardContent</span><span class="o">.</span><span class="na">FIELD_2</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;search worker!&quot;</span><span class="o">));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">CardContent</span><span class="o">.</span><span class="na">FIELD_5</span><span class="o">,</span> <span class="k">new</span> <span class="n">RectData</span><span class="o">().</span><span class="na">setIntent</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">().</span><span class="na">setData</span><span class="o">(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;https://www.google.com/search?q=worker&quot;</span><span class="o">))));</span>
+
+    <span class="k">return</span> <span class="n">content</span><span class="o">;</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="updating-contents">
+<span id="updating-contents"></span><h3>2.3.7 <em>Updating Contents</em><a class="headerlink" href="#updating-contents" title="Permalink to this headline">¶</a></h3>
+<p>When contents are prepared, it should be sent to Bixby Home application. CardContent prepared above in section 2.3.6 should be sent/committed by calling <strong>updateCardContent</strong> method of <strong>CardContentManager</strong> class.</p>
+<p>Refer to below snippet and Javadoc document of Sample application code.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">CardContent</span> <span class="n">listContent</span> <span class="o">=</span> <span class="n">getListDataContent</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">MY_CARD_ID</span><span class="o">);</span>
+<span class="n">cardContentManager</span><span class="o">.</span><span class="na">updateCardContent</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">listContent</span><span class="o">);</span>
+</pre></div>
+</div>
+<p><img alt="" src="media/image3.jpg" />{width=”3.1268657042869643in” height=”1.9825339020122486in”}</p>
+</div>
+<div class="section" id="add-cards-xml">
+<span id="add-cards-xml"></span><h3>2.3.8 <em>Add “cards.xml”</em><a class="headerlink" href="#add-cards-xml" title="Permalink to this headline">¶</a></h3>
+<p>List up all your card’s ids and template ids in cards.xml file and add it to “res/xml” folder. With the help of this meta data file, Bixby Home figures out which all cards are provided by your application.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+
+<span class="nt">&lt;cards&gt;</span>
+
+    <span class="nt">&lt;card</span> <span class="na">cardId=</span><span class="s">&quot;81000&quot;</span> <span class="na">templateId=</span><span class="s">&quot;UTILITY_LIST_IMAGE&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;card</span> <span class="na">cardId=</span><span class="s">&quot;81001&quot;</span> <span class="na">templateId=</span><span class="s">&quot;UTILITY_LIST_TRENDING&quot;</span><span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/cards&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-content-provider-instead-of-broadcast-receiver-v6">
+<span id="using-content-provider-instead-of-broadcast-receiver-v6"></span><h2>2.4 Using Content Provider instead of Broadcast Receiver (v6)<a class="headerlink" href="#using-content-provider-instead-of-broadcast-receiver-v6" title="Permalink to this headline">¶</a></h2>
+<p>If your application is concerned about the security issue of exporting Broadcast receiver in your package, you can use Content Provider which supports the caller check. But it is supported since the Bixby Home version 2.2.4.0. So be careful that if you implement your application using this Content Provider mechanism, the older version Bixby Home cannot display your cards.</p>
+<p>If you already serve some cards using Broadcast receiver, it should be kept for the old version Bixby Home compatibility. If you are about to serve the card first time, it is recommended to use this Content Provider mechanism. But please [remember that your cards can be appeared only on Bixby Home version 2.2.4.0 or later.]</p>
+<p>All callbacks on CardContentProvider class working on Broadcast Receiver would be called in your main thread, but those on CardProvider would be called in binder thread. Please refer to Android developer guide.</p>
+<div class="section" id="modify-androidmanifest-xml">
+<span id="id1"></span><h3><em>2.4.1 Modify “AndroidManifest.xml”</em><a class="headerlink" href="#modify-androidmanifest-xml" title="Permalink to this headline">¶</a></h3>
+<p>Add ‘provider’ in your AndroidManifest.xml file as the below codes. Set your class name, which inherits CardProvider class as ‘name’ attribute value.</p>
+<p>Please do not change ‘authorities’ value, keep it as below.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+
+&lt;manifest xmlns:android=http://schemas.android.com/apk/res/android
+    package=&quot;samsung.spage.sample&quot;&gt;
+
+// Add uses-permission
+&lt;uses-permission android:name=&quot;com.samsung.android.app.spage.permission.WRITE_CARD_DATA&quot; /&gt;
+
+&lt;application ... &gt;
+
+...
+
+    // Add provider block
+    &lt;provider
+        android:name=&quot;.list.ListSampleCpProvider&quot;
+        android:authorities=&quot;${applicationId}.provider.spagecardprovider&quot;
+        android:exported=&quot;true&quot;/&gt;
+
+    // Add meta data for card list
+    &lt;meta-data
+        android:name=&quot;com.samsung.android.sdk.spage.card.info&quot;
+        android:resource=&quot;@xml/cards&quot;/&gt;
+
+&lt;/application&gt;
+
+&lt;/manifest&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-the-content-provider-class">
+<span id="create-the-content-provider-class"></span><h3><em>2.4.2 Create the Content Provider Class</em><a class="headerlink" href="#create-the-content-provider-class" title="Permalink to this headline">¶</a></h3>
+<p>Create your own Content Provider class inherited from CardProvider class. Other things are same with the above guide.</p>
+</div>
+<div class="section" id="modify-cards-xml">
+<span id="modify-cards-xml"></span><h3><em>2.4.3 Modify “cards.xml”</em><a class="headerlink" href="#modify-cards-xml" title="Permalink to this headline">¶</a></h3>
+<p>In the cards.xml file, XML tag name is different from previous one. Please use ‘card-provider’ instead of ‘card’.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+<span class="nt">&lt;cards&gt;</span>
+    <span class="nt">&lt;card-provider</span> <span class="na">cardId=</span><span class="s">&quot;81000&quot;</span> <span class="na">templateId=</span><span class="s">&quot;UTILITY_LIST_IMAGE&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;card-provider</span> <span class="na">cardId=</span><span class="s">&quot;81001&quot;</span> <span class="na">templateId=</span><span class="s">&quot;UTILITY_LIST_TRENDING&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/cards&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="field-data">
+<span id="field-data"></span><h2>2.5 Field Data<a class="headerlink" href="#field-data" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fielddata-class">
+<span id="fielddata-class"></span><h3><em>2.5.1 FieldData Class</em><a class="headerlink" href="#fielddata-class" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Each card template is composed of many parts called ‘FIELD’. Each Field corresponds to a data of type ‘FieldData’.</li>
+<li>By putting ‘FieldData’ to these fields, card will display the contents on Bixby Home application.</li>
+<li>Many FieldData are derived to represent appropriate UI element (TextData, ImageData, VideoData) and event (RectData).</li>
+<li>Each field in the card should make use these types to represent the data.</li>
+</ul>
+<p><img alt="" src="media/image4.jpg" />{width=”4.820895669291339in” height=”3.370657261592301in”}</p>
+</div>
+<div class="section" id="providing-contents">
+<span id="providing-contents"></span><h3><em>2.5.2 Providing Contents</em><a class="headerlink" href="#providing-contents" title="Permalink to this headline">¶</a></h3>
+<p>To provide image contents, use ImageData class</p>
+<p>To provide text contents, use TextData class</p>
+<p>To get intents or event on user actions, use RectData inherited from ActionFieldData.</p>
+<p>To manage some special widgets, like music play controller, you can use ControllerData class which would take care of events like Next/Previous, play/pause.</p>
+<p>Please refer to ‘Bixby Home SDK UX’ document for the template data type.</p>
+</div>
+</div>
+<div class="section" id="extra-state">
+<span id="extra-state"></span><h2>2.6 Extra State<a class="headerlink" href="#extra-state" title="Permalink to this headline">¶</a></h2>
+<p>There are 5 states of cards, “NORMAL”(default), “ON_BOARDING”, “SIGN_IN”, “NO_CONTENTS”, and “AUTHORIZATION”.</p>
+<p>With default “NORMAL” state, cards contents will be composed and displayed as explained above. With other states, predefined layout will be used and displayed, when you set the extra state explicitly using CardContent class. According to your card context, set your card state properly. If you don’t set anything, it will be “NORMAL” state as default.</p>
+<p>The displayed layout and contents are defined like below. Please refer to UX guideline document for more details.</p>
+<p>SIGN_IN (v1), AUTHORIZATION(v7) – predefined text and layout will be used. Launching Activity URI on clicking the button, should be provided through Bixby Home portal site</p>
+<p>ON_BOARDING (v1) – Icon, text and launching Activity URI on clicking the button should be provided through Bixby Home portal site.</p>
+<p>NO_CONTENT (v5) - Icon and first text should be provided through Bixby Home portal site. Additionally other text, button and launching Activity URI can be provided at runtime when you set the card state as “NO_CONTENT”. These are optional things.</p>
+<div class="section" id="how-to-set-the-state">
+<span id="how-to-set-the-state"></span><h3><em>2.6.1 How to set the state</em><a class="headerlink" href="#how-to-set-the-state" title="Permalink to this headline">¶</a></h3>
+<p>Refer to codes below to change the state.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onUpdate</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">CardContentManager</span> <span class="n">cardContentManager</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">ids</span><span class="o">)</span> <span class="o">{</span>
+
+<span class="o">...</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">isInitialStep</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">CardContent</span> <span class="n">content</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CardContent</span><span class="o">(</span><span class="n">cardId</span><span class="o">);</span>
+        <span class="n">content</span><span class="o">.</span><span class="na">setExtraState</span><span class="o">(</span><span class="n">CardContent</span><span class="o">.</span><span class="na">ON_BOARDING</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">content</span><span class="o">;</span>
+    <span class="o">}</span>
+
+<span class="o">...</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="instant-update-v2">
+<span id="instant-update-v2"></span><h2>2.7 Instant Update (v2)<a class="headerlink" href="#instant-update-v2" title="Permalink to this headline">¶</a></h2>
+<p>Instant update can be used when you have to update some part of card contents periodically. For example, like sports scores in playing at sports card, it shall be updated every 10 seconds while a user is watching that card. This feature is supported since SDK API version 2.</p>
+<div class="section" id="preparing">
+<span id="preparing"></span><h3><em>2.7.1 Preparing</em><a class="headerlink" href="#preparing" title="Permalink to this headline">¶</a></h3>
+<p>Not all card templates support this instant update. Choose the right template on Bixby Home partner portal site. And the update interval time(seconds) should be set in BH portal site, because this update will be invoked periodically while the card is displaying on the stream.</p>
+<p>If you want to test it locally, Referring to ‘Manifest side-loading’ in appendix, insert following block after “templateId” element. Below example is to set the interval as 5 seconds.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;properties&quot;</span><span class="p">:</span> <span class="p">{</span>
+
+<span class="s2">&quot;updateInterval&quot;</span> <span class="p">:</span> <span class="s2">&quot;5&quot;</span>
+
+<span class="o">...</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="override-oninstantupdate-method">
+<span id="override-oninstantupdate-method"></span><h3><em>2.7.2 Override onInstantUpdate Method</em><a class="headerlink" href="#override-oninstantupdate-method" title="Permalink to this headline">¶</a></h3>
+<p>Override onInstantUpdate method in your CardContentProvider class. There is two different thing with onUpdate method.</p>
+<p>One thing is the ‘updateCode’ as last argument. This onInstantUpdate will be called repeatedly on that period time. So, to manage these update sequence, this updateCode is added. This code should be used, when you update the card contents, with the method, ‘updateInstantCardContent’ on the CardContentManager class.</p>
+<p>The other thing is that it is possible to update card content partially. Just update frequently changeable contents only for better performance.</p>
+<p>| Callback method | Content update method                       | Update content            | Invoke period          | Available templates       | mandatory to override |
+| ————— | ——————————————- | ————————- | ———————- | ————————- | ——————— |
+| onUpdate        | CardContentManager.updateCardContent        | Full content              | System interval        | All templates             |                       |
+| onInstantUpdate | CardContentManager.updateInstantCardContent | Partial content available | Card specific interval | Limited to some templates | X                     |</p>
+<p>If you want to call updateInstantCardContent later to update asynchronously, keep the ‘updateCode’ and use it. Do not use old or not received updateCode, it will not work.</p>
+<p>Although you are using instant update, onUpdate should be also overridden to provide full contents snapshot of your card.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import static</span> <span class="nn">com.samsung.android.sdk.spage.card.CardContent.*</span><span class="o">;</span>
+
+<span class="o">...</span>
+
+<span class="nd">@Override</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onInstantUpdate</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">CardContentManager</span> <span class="n">contentManager</span><span class="o">,</span> <span class="kt">int</span> <span class="n">cardId</span><span class="o">,</span> <span class="kt">int</span> <span class="n">updateCode</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">cardId</span> <span class="o">==</span> <span class="n">MY_CARD_ID</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">CardContent</span> <span class="n">content</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CardContent</span><span class="o">(</span><span class="n">cardId</span><span class="o">);</span>
+        <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_3</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="n">getCost</span><span class="o">().</span><span class="na">toString</span><span class="o">()));</span>
+        <span class="n">contentManager</span><span class="o">.</span><span class="na">updateInstantCardContent</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">content</span><span class="o">,</span> <span class="n">updateCode</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="sharing-contents-v4">
+<span id="sharing-contents-v4"></span><h2><em>2.8 Sharing Contents (v4)</em><a class="headerlink" href="#sharing-contents-v4" title="Permalink to this headline">¶</a></h2>
+<p>Your card contents can be shared via the share panel in Android framework. In UX guide document, the templates which have ‘share content’ column in the field table can support share functions.</p>
+<p>To activate ‘share’ function, below two things should be done.</p>
+<ol class="simple">
+<li>Add ‘share’ property in Bixby Home Portal</li>
+<li>Provide share contents in onUpdate callback.</li>
+</ol>
+<p>When you input card information in Bixby Home Portal website, there is ‘Buttons’ in ‘Header’ section. ‘share’ can be added by OR-ing with other options.</p>
+<p>Buttons : refresh|more|share</p>
+<p>And in your app code, fill the sharing content data with the ShareData class and put it into the some FieldData class. All the share content in a CardContent should be have same MIME type. So MIME type would be set at CardContent class, although ShareData can be set on more than one FieldData.</p>
+<p>Be sure to check template guide, because not all templates support ShareData. FieldData where ShareData can be set is also defined at that guide.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">CardContent</span> <span class="n">content</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CardContent</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+
+<span class="o">...</span>
+
+<span class="n">content</span><span class="o">.</span><span class="na">setShareMimeType</span><span class="o">(</span><span class="s">&quot;image/*&quot;</span><span class="o">);</span>
+
+<span class="n">ShareData</span> <span class="n">shareData</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ShareData</span><span class="o">();</span>
+
+<span class="n">shareData</span><span class="o">.</span><span class="na">setDataUri</span><span class="o">(</span><span class="n">getShareContentUri</span><span class="o">());</span>
+
+<span class="o">...</span>
+
+<span class="n">rectData</span><span class="o">.</span><span class="na">setShareData</span><span class="o">(</span><span class="n">shareData</span><span class="o">);</span>
+
+<span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">CardContent</span><span class="o">.</span><span class="na">FIELD_8</span><span class="o">,</span> <span class="n">rectData</span><span class="o">);</span>
+
+<span class="o">...</span>
+</pre></div>
+</div>
+<p>After these things are completed, when user clicks the ‘share’ icon on the header of the card, ‘share’ panel will be appeared.</p>
+</div>
+<div class="section" id="multi-instance-card-v5">
+<span id="multi-instance-card-v5"></span><h2>2.9 Multi-instance Card (v5)<a class="headerlink" href="#multi-instance-card-v5" title="Permalink to this headline">¶</a></h2>
+<p>When you have single content source but the content should be displayed with several cards with each own configuration, you can use this multi-instance card type.</p>
+<p>For example, with the sports card, many teams are there, and users can select some preferred teams and see their score and status on each different card. Those cards look and layout would be same although the team is different.</p>
+<p>To do this, two types of card should be prepared. One is the intro card and the other is the instance card. Both cards should be registered at Bixby Home portal.</p>
+<p>The intro card is to introduce your card content and provide the customize button to let users to select preferred things as cards. (For example, preferred things can be teams on the domain of sports, or news categories on the news domain)</p>
+<p><img alt="" src="media/image5.jpg" />{width=”1.845450568678915in” height=”1.470148731408574in”}</p>
+<p>Making ‘intro’ card is same as other cards. Only one thing to be considered is to make the ‘Customize’ button to invoke your activity on which users can select preferred things. When users’ selections are completed, the selection changes should be notified and updated to Bixby Home.</p>
+<p>In the instance card, there are two kinds of types, the parent (representative) instance card and child instance card. The parent instance card is the base card at which all properties will be set on Bixby Home portal registration step. The child instance cards are to instantiate the users’ selected preferred things as cards. Child instance cards inherit all the properties of the parent instance card.</p>
+<p>The intro card id and parent (representative) instance card id are issued from Bixby Home portal site. For child instance card id, you can choose and assign them to your cards. There are rules for instance card id. The parent instance card id would have 5 zero digits at lower part (in case of test card id, 3 zero digits). For example, if the parent instance card id is 123400000, then the child instance card id would be from 123400001 to 123499999. (With test card, if it is 82000, then the child instance card id is from 82001 ~ 82999)</p>
+<p>Only if the child instance card id is in the valid range, you can freely choose and assign them to your configured cards.</p>
+<p>To avoid synchronization problem between your application and Bixby Home, the chosen card id should be kept once it has been assigned.</p>
+<p><img alt="" src="media/image6.png" />{width=”3.672267060367454in” height=”1.7238801399825021in”}</p>
+<p>This is MultiInstancePreferenceData class hierarchy. About category ids, only if they are not duplicated, whatever they are, it is ok. The ‘title’ is a string to be shown to users.</p>
+<p><img alt="" src="media/image7.jpg" />{width=”3.5596992563429573in” height=”2.0in”}</p>
+<p>Using MultiInstancePreferenceData class, you can provide those information, category id and title, and card id and title, to Bixby Home.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MultiInstancePreferenceData</span> <span class="n">getPreferenceData</span><span class="p">()</span> <span class="p">{</span>
+
+<span class="n">MultiInstancePreferenceData</span> <span class="n">data</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MultiInstancePreferenceData</span><span class="p">();</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;All the Sports&quot;</span><span class="p">);</span>
+
+<span class="n">MultiInstancePreferenceData</span><span class="o">.</span><span class="n">Category</span> <span class="n">category</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MultiInstancePreferenceData</span><span class="o">.</span><span class="n">Category</span><span class="p">();</span>
+
+<span class="n">category</span><span class="o">.</span><span class="n">setId</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;NBA Basketball&quot;</span><span class="p">);</span>
+
+<span class="n">category</span><span class="o">.</span><span class="n">addCard</span><span class="p">(</span><span class="n">new</span> <span class="n">MultiInstancePreferenceData</span><span class="o">.</span><span class="n">Card</span><span class="p">()</span><span class="o">.</span><span class="n">setId</span><span class="p">(</span><span class="mi">123400001</span><span class="p">)</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;Boston Celtics&quot;</span><span class="p">));</span>
+
+<span class="n">category</span><span class="o">.</span><span class="n">addCard</span><span class="p">(</span><span class="n">new</span> <span class="n">MultiInstancePreferenceData</span><span class="o">.</span><span class="n">Card</span><span class="p">()</span><span class="o">.</span><span class="n">setId</span><span class="p">(</span><span class="mi">123400002</span><span class="p">)</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;LA Lakers&quot;</span><span class="p">));</span>
+
+<span class="o">...</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">addCategory</span><span class="p">(</span><span class="n">category</span><span class="p">);</span>
+
+<span class="n">category</span> <span class="o">=</span> <span class="n">new</span> <span class="n">MultiInstancePreferenceData</span><span class="o">.</span><span class="n">Category</span><span class="p">();</span>
+
+<span class="n">category</span><span class="o">.</span><span class="n">setId</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;MLB Baseball&quot;</span><span class="p">);</span>
+
+<span class="n">category</span><span class="o">.</span><span class="n">addCard</span><span class="p">(</span><span class="n">new</span> <span class="n">MultiInstancePreferenceData</span><span class="o">.</span><span class="n">Card</span><span class="p">()</span><span class="o">.</span><span class="n">setId</span><span class="p">(</span><span class="mi">123400101</span><span class="p">)</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;New York Yankees&quot;</span><span class="p">));</span>
+
+<span class="n">category</span><span class="o">.</span><span class="n">addCard</span><span class="p">(</span><span class="n">new</span> <span class="n">MultiInstancePreferenceData</span><span class="o">.</span><span class="n">Card</span><span class="p">()</span><span class="o">.</span><span class="n">setId</span><span class="p">(</span><span class="mi">123400102</span><span class="p">)</span><span class="o">.</span><span class="n">setTitle</span><span class="p">(</span><span class="s2">&quot;LA Lakers&quot;</span><span class="p">));</span>
+
+<span class="o">...</span>
+
+<span class="n">data</span><span class="o">.</span><span class="n">addCategory</span><span class="p">(</span><span class="n">category</span><span class="p">);</span>
+
+<span class="k">return</span> <span class="n">data</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>At first, override onPreferenceRequested method on your CardProivder class to provide these information to Bixby Home</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span>private static final int SPORTS\_PARENT\_INSTANCE\_CARD\_ID = 123400000;
+
+...
+
+@Override
+protected void onPreferenceRequested(Context context, CardContentManger cardContentManager, int cardId) {
+
+    if (cardId == SPORTS_PARENT_INSTANCE_CARD_ID) {
+        cardContentManager.updateMultiInstancePreference(context, cardId, getPreferenceData());
+    }
+
+}
+</pre></div>
+</div>
+<p>Whenever users change the preferred things on your application, call this directly to inform to Bixby Home.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CardContentManager</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">updateMultiInstancePreference</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">SPORTS_PARENT_INSTANCE_CARD_ID</span><span class="p">,</span> <span class="n">getPreferenceData</span><span class="p">());</span>
+</pre></div>
+</div>
+<p>With these provided child instance card information and ids, Bixby Home will request contents of them through onUpdate method. Then you can provide the contents to be displayed.</p>
+<p>Be sure that there will be no content request with parent instance card id.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onUpdate</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">CardContentManger</span> <span class="n">cardContentManager</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">cardIds</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">id</span> <span class="o">:</span> <span class="n">cardIds</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">cardId</span> <span class="o">==</span> <span class="mi">345604321</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// INTRO Card</span>
+            <span class="o">...</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">cardId</span> <span class="o">==</span> <span class="mi">123400001</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// child instance card : Boston Celtics</span>
+            <span class="o">...</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> 
+            <span class="o">...</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+<p>As last thing, with Cards.xml file on your xml resource, add two cards information, intro card and parent (representative) instance card.</p>
+<p>* &lt;card-provider&gt; tag is supported since API v6, it declares that cards work based on Content Provider of Android instead of Broadcast Receiver.</p>
+<div class="highlight-xml notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
+
+<span class="nt">&lt;cards&gt;</span>
+
+<span class="nt">&lt;card-provider</span> <span class="na">cardId=</span><span class="s">&quot;345604321&quot;</span> <span class="na">templateId=</span><span class="s">&quot;SPORTS_GAME_LIVE&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;card-provider</span> <span class="na">cardId=</span><span class="s">&quot;123400000&quot;</span> <span class="na">templateId=</span><span class="s">&quot;SPORTS_GAME_LIVE&quot;</span><span class="nt">/&gt;</span>
+
+...
+
+<span class="nt">&lt;/cards&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="variable-field-v6">
+<span id="variable-field-v6"></span><h2>2.10 Variable Field (v6)<a class="headerlink" href="#variable-field-v6" title="Permalink to this headline">¶</a></h2>
+<p>Some card templates have a special field, which is called “variable field”. Normally a filed has a single component type. But this field provides more than one component type to be set. You can choose one of them according to your card use cases and set it on that field. To select a component type, make the field option number to be set together with a FieldData. Please refer to UX guide for those field and field option number.</p>
+<p>Below the sample code is that when the field 6 is variable field, and option 2, image is to be set,</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">FIELD_OPTION_IMAGE</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+
+<span class="o">...</span>
+
+<span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">CardContent</span><span class="o">.</span><span class="na">FIELD_6</span><span class="o">,</span> <span class="n">FIELD_OPTION_IMAGE</span><span class="o">,</span>
+<span class="k">new</span> <span class="n">ImageData</span><span class="o">().</span><span class="na">setImageResName</span><span class="o">(</span><span class="s">&quot;gallery&quot;</span><span class="o">));</span>
+
+<span class="o">...</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="server-based-integration">
+<span id="server-based-integration"></span><h1>3. Server based integration<a class="headerlink" href="#server-based-integration" title="Permalink to this headline">¶</a></h1>
+<p>Bixby Home card server-based implementations enable your Bixby Home cards to be displayed to your app and card users at the right time and under the right conditions.</p>
+<p>This document describes guides you through:</p>
+<ul class="simple">
+<li>Server-based implementation of Bixby Home cards for Android apps</li>
+<li>Components in the Bixby Home environment</li>
+<li>How to register your Bixby Home card plans and Bixby Home cards</li>
+<li>Bixby Home card content and selection processing</li>
+<li>How to upload Bixby Home card content data.</li>
+</ul>
+<blockquote>
+<div><strong>Note:</strong>     Bixby Home also supports application-based implementations, in which card content data is coded directly in the Bixby Home card’s Android app. For details, see the <em>Bixby Home Application-Based Implementation Guide</em>.</div></blockquote>
+<p>Implementation relies on the integration of: your Partner Content Server, the Bixby Home Partner Portal, the Bixby Home Admin Tool, the Bixby Home Server, and the Bixby Home Client Application on user devices.</p>
+<p>To enable the implementation of your Bixby Home cards:</p>
+<ul class="simple">
+<li>You design your card based on your users’ needs and the most suitable Bixby Home card template.</li>
+<li>You register your card plan, and get it approved by Samsung.</li>
+<li>You register your card (for example, display conditions such as the relevant time and place, and card content selection rules) and get it approved by Samsung.</li>
+<li>You upload card content:<ul>
+<li>From your Partner Content Server to the Bixby Home Server using the Open API.</li>
+<li>Throughout your card’s lifecycle, upload sets of card content data that are appropriate for display at different times (for example, on different days, at different times of the day, and for special situations).</li>
+</ul>
+</li>
+<li>The Bixby team sets up deployment and display conditions for you card in the Bixby Admin Tool.</li>
+<li>The Bixby Home Server provides card display and template data to the Bixby Home Client App.</li>
+<li>The Bixby Home Client App determines when to display your card.</li>
+<li>The Bixby Home Server selects the most appropriate uploaded card content data and provides it to the Bixby Home Client App.</li>
+<li>Your users review your Bixby Home card and use its functionality.</li>
+</ul>
+<div class="section" id="bixby-home-card-environment">
+<span id="bixby-home-card-environment"></span><h2>3.1 Bixby Home Card Environment<a class="headerlink" href="#bixby-home-card-environment" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="components-and-functions">
+<span id="components-and-functions"></span><h3><em>3.1.1 Components and Functions</em><a class="headerlink" href="#components-and-functions" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Bixby Home Partner Portal (<a class="reference external" href="https://bixbyhome.samsungfeed.com">https://bixbyhome.samsungfeed.com</a>)</p>
+<ul class="simple">
+<li>Become a Bixby partner.</li>
+<li>Design your card based on your user needs, card content, and the card template that is most appropriate. Map card content to the template elements.</li>
+<li>Create and submit your card plans and cards, and get them approved.</li>
+</ul>
+</li>
+<li><p class="first">Partner Content Server</p>
+<ul class="simple">
+<li>One or more of your servers that send card content data to the Bixby Home Server using its Open API call <a class="reference external" href="#_Put_Card_Content_1">Upload Card Content Data</a>. You can also retrieve previously uploaded content, upload later versions of content (with or without deleting previous versions),  and delete uploaded content from the Bixby Home Server.</li>
+<li>How often you upload content depends on your use scenario for your card.</li>
+</ul>
+</li>
+<li><p class="first">Bixby Home Admin Tool</p>
+<ul>
+<li><p class="first">Card plans and cards are evaluated and approved.</p>
+</li>
+<li><p class="first">Approved cards are deployed.</p>
+</li>
+<li><p class="first">The Bixby Home Partner Portal is managed.</p>
+<blockquote>
+<div><p><strong>Note:</strong> Only Samsung uses this tool.</p>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p class="first">Bixby Home Server</p>
+<ul class="simple">
+<li>Gets and processes uploaded card content data and display condition data.</li>
+<li>Sends data to the Bixby Home Client Application.</li>
+</ul>
+</li>
+<li><p class="first">Bixby Home Client Application</p>
+</li>
+<li><p class="first">Resides on the user’s device.</p>
+</li>
+<li><p class="first">Determines when to display each Bixby Home card.</p>
+</li>
+<li><p class="first">For each card to be displayed:</p>
+<ul class="simple">
+<li>The Bixby Home Server selects the most appropriate card content and provides it to the Bixby Home Client Application.</li>
+<li>Constructs and displays the card based on the card template and the card content.</li>
+<li>Manages user-initiated card actions.</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="roles">
+<span id="roles"></span><h3><em>3.1.2 Roles</em><a class="headerlink" href="#roles" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Bixby Partner (you)<ul>
+<li>Register card plans and get them approved.</li>
+<li>Register cards (including card content and card display condition data) and get them approved.</li>
+<li>Upload card content data from your Partner Content Server to the Bixby Home Server.</li>
+</ul>
+</li>
+<li>Samsung</li>
+<li>Set up and enforce the display conditions of your card.</li>
+<li>Deploy your card to the Bixby Home Client Application on user devices.</li>
+<li>Your card users<ul>
+<li>See appropriate Bixby Home cards based on the user’s actions and preferences.</li>
+<li>Review up-to-date card content that is either independent of, related to, or the same as the card’s Android app.</li>
+<li>Initiate functions provided by the card.</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="manage-card-content">
+<span id="manage-card-content"></span><h2>3.2 Manage Card Content<a class="headerlink" href="#manage-card-content" title="Permalink to this headline">¶</a></h2>
+<p>After the Bixby system determines that your card is to be displayed, the system then determines what content is to be displayed in the card based on the following:</p>
+<ul class="simple">
+<li>The selection rules you specify for your card’s content</li>
+<li>The card content you upload from your Partner Content Server to the Bixby Home Server using the Open API.</li>
+<li>The settings related to selection rule filters that you apply to each uploaded card content.</li>
+</ul>
+<p>The Bixby Home Server applies the selection rule filters to find all uploaded content that match all rule filters, and then selects the most appropriate of those based on the selection rule criteria. The Bixby Home Server then forwards the most appropriate uploaded content to the Bixby Home Client Application for display in the card template.</p>
+<div class="section" id="card-content-uploading-and-management">
+<span id="card-content-uploading-and-management"></span><h3><em>3.2.1 Card Content Uploading and Management</em><a class="headerlink" href="#card-content-uploading-and-management" title="Permalink to this headline">¶</a></h3>
+<p>Each set of card content that you upload must specify all element components required for the card’s template. If the selected uploaded content does not include a full set of content data for the card’s template, then the No Content card is displayed.</p>
+<p>You create and manage a unique content ID for each uploaded content (contentId). After your Bixby Home card is approved, Samsung assigns a unique access token to your card, which must be specified in each Open API call that targets the card. To get your card’s access token value, see <a class="reference external" href="#_To_manage_your">To manage your Bixby Home cards:</a></p>
+<p>You use the access token and content ID to manage your uploaded content by the following Open API methods.</p>
+<ul>
+<li><p class="first">Upload card content</p>
+<p>With the Upload Card Content Data API, you send card content from your Partner Content Server to the Bixby Home Server and make it available for display in your card.
+For details, see <a class="reference external" href="#_Put_Card_Content_1">Put Card Content Data</a>.</p>
+</li>
+<li><p class="first">Download previously uploaded content</p>
+<p>With the Get Uploaded Card Content Data API, you retrieve card content that was previously uploaded and is currently available for display in your card.</p>
+<p>Currently, individual contents can be checked, but contents retrieval function will be provided later.
+For details, see <a class="reference external" href="#_Get_Card_Content_2">Get Uploaded Card Content Data</a>.</p>
+</li>
+<li><p class="first">Delete uploaded content</p>
+<p>With the Delete Uploaded Card Content Data API, you can make card content that was previously uploaded <strong>not</strong> available for display in your card. The content is permanently deleted from the Bixby Home Server.</p>
+<p>For details, see <a class="reference external" href="#_Delete_Card_Content">Delete Uploaded Card Content Data</a>.</p>
+</li>
+</ul>
+<p>For details, see the <em>Bixby Home SDK Card Template UX Guidelines</em>.</p>
+</div>
+<div class="section" id="bixby-home-server-endpoint-locations">
+<span id="bixby-home-server-endpoint-locations"></span><h3><em>3.2.2 Bixby Home Server Endpoint Locations</em><a class="headerlink" href="#bixby-home-server-endpoint-locations" title="Permalink to this headline">¶</a></h3>
+<p>Bixby Home Server endpoints are located in the Asia, United States, and Europe regions. You should send your contents to the endpoints in all regions where your card will be served.</p>
+<p>![1542855506726](C:\Users\Sungtaek\AppData\Roaming\Typora\typora-user-images\1542855506726.png)</p>
+<p>| <strong>Region</strong> | <strong>Bixby Home Server Endpoint</strong>      |
+| ———- | ———————————– |
+| US         | https://us-data-api.samsungfeed.com |
+| Asia       | https://ap-data-api.samsungfeed.com |
+| Europe     | https://eu-data-api.samsungfeed.com |</p>
+<p>For details about the countries serviced by each region, see <a class="reference external" href="#_Appendix_C._Bixby">Appendix C. Bixby Home Server Endpoint Regions for Service Countries</a>.</p>
+</div>
+<div class="section" id="uploaded-card-content-selection">
+<span id="uploaded-card-content-selection"></span><h3><em>3.2.3 Uploaded Card Content Selection</em><a class="headerlink" href="#uploaded-card-content-selection" title="Permalink to this headline">¶</a></h3>
+<p>When your card is to be displayed, the Bixby system will select the most appropriate content for your card based on: each set of card content data that you have uploaded from your Partner Content Server to the Bixby Home Server, and the evaluation of the content selection rules that you specify for your card.</p>
+<p>For each of your cards, you specify one or more selection rules to determine the most appropriate uploaded content for your card when it is to be displayed.</p>
+<p>Each selection rule is defined by the following:</p>
+<ul class="simple">
+<li><em>Optional</em>  None, one, or more filters
+Multiple filters are connected by the logical AND condition. For details about each type of filter, see <a class="reference external" href="#_Selection_Rule_Filters">Selection Rule Filters</a>.</li>
+<li><em>Required</em>  One selection criteria:<ul>
+<li>Latest        Of the uploaded content that match <strong>all</strong> rule filters, the content that was most recently uploaded is selected. If more than one most recent content was uploaded at the same time, then one of them will be arbitrarily selected.</li>
+<li>Random    Of the uploaded content that match <strong>all</strong> rule filters, one content is arbitrarily selected.</li>
+</ul>
+</li>
+</ul>
+<p>For the selection rule being evaluated:</p>
+<ul class="simple">
+<li>If no filter is specified, then the selection criteria will be used to evaluate <strong>all</strong> uploaded content in order to select the one most appropriate content.</li>
+<li>If one or more filters are specified:<ul>
+<li>If only one uploaded content matches all filters, then that content is selected.</li>
+<li>If more than one uploaded content match all filters, then one of those will be selected based on the selection criteria.</li>
+<li>If no uploaded content matches all filters, then the next lower selection rule is evaluated until all selection rules have been evaluated.</li>
+</ul>
+</li>
+</ul>
+<p>The following govern the evaluation of the selection rules specified in the list:</p>
+<ul class="simple">
+<li>At most, one selection rule is used to select one uploaded card content.
+However, evaluation of all selection rules could result in no selection of card content.</li>
+<li>The top selection rule is evaluated first.</li>
+<li>If uploaded content is selected by the rule being evaluated:<ul>
+<li>That content is displayed in the Bixby Home card.</li>
+<li>The card content selection process stops.</li>
+</ul>
+</li>
+<li>If no uploaded content is selected by the rule being evaluated:<ul>
+<li>The next lower selection rule is evaluated.</li>
+<li>If uploaded content is selected, the content is used, and the selection process stops.</li>
+<li>If no content is not selected, the next lower selection rule is evaluated.</li>
+</ul>
+</li>
+<li>The selection process continues until either:<ul>
+<li>Uploaded content is selected by one of the selection rules.
+OR</li>
+<li>The lowest selection rule is evaluated and no content is selected.
+The resulting action depends on whether or not the user has pinned the card:<ul>
+<li>When the user pinned the card, the No Content card is displayed.</li>
+<li>When the user did not pin the card, the card and its No Content card are <strong>not</strong> displayed.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="selection-rule-filters">
+<span id="selection-rule-filters"></span><h3>Selection Rule Filters<a class="headerlink" href="#selection-rule-filters" title="Permalink to this headline">¶</a></h3>
+<p>When the Bixby Home system has determined that your card is to be displayed, the content to be displayed in your card will be the most appropriate collection of card content uploaded from your server to the Bixby Home Server, as determined by the following:</p>
+<ul class="simple">
+<li>The selection filters specified in the selection rules of your card registration (in the Bixby Home Partner Portal).</li>
+<li>The selection filter settings that are specified when card content is uploaded (specified in the contentField parameters of the <a class="reference external" href="#_Upload_Card_Content">Upload Card Content Data</a> API call).</li>
+</ul>
+<blockquote>
+<div><strong>Note:</strong>  These settings are applied to card content at the time of upload. Each uploaded content can specify more than one type of filter, and can specify more than one value for each filter.</div></blockquote>
+<p>| <strong>Name</strong>   | <strong>Selection    Rule Setting</strong>      | <strong>Uploaded    Content     Settings</strong>    contents    <strong>└</strong>{content}    <strong>└</strong> contentField | <strong>Description</strong>                                              |
+| ———- | ———————————- | ———————————————————— | ———————————————————— |
+| Tag        | ‘Add filter’ and specify tag value | └ tag    └ {tag value}                                       | Consider content with the same tag value   as the selection rule’s tag value.   For example, you can assign unique tag   values for each of your Bixby Home cards. |
+| FirstOfDay | ‘Add filter’                       | n/a[[PT4]](#_msocom_4)                                      | Whether or not the user has entered the Bixby   Home Client App for the first time in the current day. If the user has, then   the filter condition is true. If the user has not, then false.   Typically, this filter is used with other   filters. |
+| Country    | ‘Add filter’                       | └ country   └ {country value}                                | Consider content with the same country   value that the Bixby Home Client App has when the rule is evaluated. |
+| Year       | ‘Add filter’                       | └ year   └ {year value}                                      | Consider content with the same year value   (YYYY) that the Bixby Home Client App has when the rule is evaluated. |
+| Month      | ‘Add filter’                       | └ month   └ {month value}                                    | Consider content with the same month   value (01 to 12) that the Bixby Home Client App has when the rule is   evaluated. |
+| Day        | ‘Add filter’                       | └ day   └ {day value}                                        | Consider content with the same date value   (00 to 31) that the Bixby Home Client App has when the rule is evaluated. |
+| TimeRange  | ‘Add filter’                       | └ timeRange   └ {timeRange value}   └ start   └   end        | Consider content with daily start and end   hour-minute values (HH:mm) that includes the time (HH:mm) that the Bixby Home   Client App has when the rule is evaluated. |
+| Weather    | ‘Add filter’                       | └ weather   └ {weather value}                                | Consider content with the same weather value   (0 to 19) that the Bixby Home Client App has when the rule is evaluated.   0: sunny   1: partly sunny   2: cloud   3: fog   4, 5, 6, 7, 21: raining   8, 9, 20:   thunder   10, 11,   12, 13, 14, 15, 16: snowing[<a class="reference external" href="#_msocom_5">PT5]</a>    17: hot   18: cold   19: windy |
+| [None]     | Do <strong>not</strong> add any filter.         |                                                              | Apply the specified rule selection   criteria (latest or random) to <strong>all</strong> uploaded content. |</p>
+</div>
+<div class="section" id="specify-selection-rules">
+<span id="specify-selection-rules"></span><h3>Specify Selection Rules<a class="headerlink" href="#specify-selection-rules" title="Permalink to this headline">¶</a></h3>
+<p>Each Bixby Home card must specify at least one selection rule. Each rule must specify a selection criteria, but may or may not specify a filter. Rules in the list are evaluated from top-to-bottom.</p>
+<p>To specify a selection rule in the Bixby Home Partner Portal:</p>
+<ul class="simple">
+<li><em>Optional</em>  For each filter to be added, click <strong>Add filter</strong>.<ul>
+<li>For Tag filters, specify the tag value.</li>
+</ul>
+</li>
+<li><em>Required</em>  Select either the ‘Latest’ or ‘Random’ selection criteria.</li>
+<li>Click the <strong>[selection rule’s</strong> + <strong>plus icon]</strong>.</li>
+</ul>
+<p>Additional selection rules are added below the last previously added rule.</p>
+<p>![1542863509911](C:\Users\Sungtaek\AppData\Roaming\Typora\typora-user-images\1542863509911.png)</p>
+<p>Example Selection Rule Evaluation Process</p>
+<p>![1542863585787](C:\Users\Sungtaek\AppData\Roaming\Typora\typora-user-images\1542863585787.png)</p>
+<ol class="simple">
+<li>Evaluate the top selection rule.<ul>
+<li>If the user has entered the Bixby Home Client App for the first time in the current day:<ul>
+<li>If one or more uploaded content matches the weather code value in the Bixby Home Client App, then select the most recently uploaded card content. Stop the selection rule evaluation process.</li>
+<li>If <strong>no</strong> uploaded content matches the Bixby Home Client App’s weather code value, then evaluate selection rule #2.</li>
+</ul>
+</li>
+<li>If the user has not entered the Bixby Home Client App for the first time in the current day (for example, this is the second time they entered the app), then evaluate selection rule #2.</li>
+</ul>
+</li>
+<li>Evaluate the next selection rule.<ul>
+<li>If one or more uploaded content <strong>both</strong>: a) matches the country code value in the Bixby Home Client App, <strong>and</strong> b) has the tag setting ‘SpecialDay’, then select the most recently uploaded content. Stop the selection rule evaluation process.</li>
+<li>If <strong>no</strong> uploaded content both: a) matches the Bixby Home Client App’s country code value, <strong>and</strong>
+b) has the tag setting ‘SpecialDay’, then evaluate selection rule #3.</li>
+</ul>
+</li>
+<li>Evaluate the last selection rule.<ul>
+<li>If one or more card content has been uploaded, then arbitrarily select one card content. Stop the selection rule evaluation process.</li>
+<li>If no card content has been uploaded, then display the No Content card. Stop the selection rule evaluation process.</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="card-content-data-sets">
+<span id="card-content-data-sets"></span><h2>3.2 Card Content Data Sets<a class="headerlink" href="#card-content-data-sets" title="Permalink to this headline">¶</a></h2>
+<p>You can specify one or more sets of card content data for the same Bixby Home card when you make an Upload Card Content Data API call. Each set of data must specify all of the card content elements (and all of the components for each element) that are required for the card’s template. Each uploaded set of content data is independently evaluated by the selection rule process in order to determine the most appropriate set of data to be displayed as the content of a card.</p>
+<blockquote>
+<div><p><strong>Note:</strong>  Multiple sets of data for the same Bixby Home card can uploaded in one Upload Card Content Data API call. Each set of data will have the same: content ID, time of upload, and filter settings.</p>
+<p>For details about specifying and uploading sets of card content data, see <a class="reference external" href="#_Put_Card_Content_1">Upload Card Content Data</a>.</p>
+</div></blockquote>
+<p>For details about the card content elements that must be specified for each Bixby Home card template, see Appendix D. Bixby Home card Templates.</p>
+<ul class="simple">
+<li>Sample Upload API Code of One Content Data Set for a Card with Two Element Components</li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;data&quot; : [{
+        &quot;tag&quot; : 1,
+        &quot;type&quot; : &quot;VIDEO&quot;,
+        &quot;property&quot; : {
+            &quot;videoPath&quot; : &quot;https://img.kr.news.samsung.com/kr/wp-content/uploads/2017/04/galaxys8_007.mp4&quot;
+        }
+    }, {
+        &quot;tag&quot; : 2,
+        &quot;type&quot; : &quot;TEXT&quot;,
+        &quot;property&quot; : {
+            &quot;rawString&quot; : &quot;Samsung Galaxy S8, S8+ Launch&quot;
+        }
+    },
+]
+</pre></div>
+</div>
+<ul class="simple">
+<li>Sample Upload API Code of Two Content Data Sets for a Card with Two Element Components</li>
+</ul>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;data&quot; : [{
+        &quot;tag&quot; : 1,
+        &quot;type&quot; : &quot;VIDEO&quot;,
+        &quot;property&quot; : {
+            &quot;videoPath&quot; : &quot;https://img.kr.news.samsung.com/kr
+                            /wp-content/uploads/2017/04/galaxys8_007.mp4&quot;
+        }
+    }, {
+        &quot;tag&quot; : 2,
+        &quot;type&quot; : &quot;TEXT&quot;,
+        &quot;property&quot; : {
+            &quot;rawString&quot; : &quot;Samsung Galaxy S8, S8+ Launch&quot;
+        }
+    }, {
+        &quot;tag&quot; : 1,
+        &quot;type&quot; : &quot;VIDEO&quot;,
+        &quot;property&quot; : {
+            &quot;videoPath&quot; : &quot;https://img.kr.news.samsung.com/kr
+                            /wp-content/uploads/2017/04/galaxys8_007.mp4&quot;
+        }
+    }, {
+        &quot;tag&quot; : 2,
+        &quot;type&quot; : &quot;TEXT&quot;,
+        &quot;property&quot; : {
+            &quot;rawString&quot; : &quot;Samsung Galaxy S8, S8+ Launch&quot;
+        }
+    },
+
+]
+</pre></div>
+</div>
+</div>
+<div class="section" id="bixby-home-server-open-api">
+<span id="bixby-home-server-open-api"></span><h2>3.3 Bixby Home Server Open API<a class="headerlink" href="#bixby-home-server-open-api" title="Permalink to this headline">¶</a></h2>
+<p>You use the Bixby Home Server Open API to upload your Bixby Home card content data from your Partner Content Server to the Bixby Home Server, and retrieve and delete card content data.</p>
+<div class="section" id="api-requirements-and-restrictions">
+<span id="api-requirements-and-restrictions"></span><h3><em>3.3.1 API Requirements and Restrictions</em><a class="headerlink" href="#api-requirements-and-restrictions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="requests">
+<span id="requests"></span><h4>Requests<a class="headerlink" href="#requests" title="Permalink to this headline">¶</a></h4>
+<p>All APIs require SSL communication. All APIs must use the HTTPS protocol. Required parameters must be specified in all API calls. Optional parameters may or may not be specified. Conditional parameters must be specified when their condition applies.</p>
+<p>The access token, issued to the card’s Android app registrar, must be specified to authenticate and execute an API call. You get the value from the Bixby Home Partner Portal (<a class="reference external" href="#_To_manage_your">To manage your Bixby Home cards:</a>).</p>
+<p>Regarding string and integer values:</p>
+<ul class="simple">
+<li>For string values:<ul>
+<li>Length(N)      String parameter size must be N.</li>
+<li>Min(N)            If the parameter can accept a range of values, its minimum size is N.</li>
+<li>Max(N)           The maximum size  of the parameter is N (default value: 9999)</li>
+</ul>
+</li>
+<li>For integer values, minimum and maximum default settings:<ul>
+<li>Min  Default      0</li>
+<li>Max Default        9999</li>
+</ul>
+</li>
+</ul>
+<p>Regarding the parameter format:</p>
+<ul>
+<li><p class="first">Use the Restful format.</p>
+</li>
+<li><p class="first">To retrieve data, use the <a class="reference external" href="#_Get_Uploaded_Card">Get Uploaded Card Content</a> API call, which uses a URL query parameter.</p>
+<blockquote>
+<div><p><strong>Note:</strong>  Every key value pair must be URL-encoded.</p>
+</div></blockquote>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>GET /getApi?key1=value1&amp;key2=value2 HTTP/1.0                        
+Host: www.example.com                                               
+Accept: application/json    
+</pre></div>
+</div>
+</li>
+<li><p class="first">When changing data, use the <a class="reference external" href="#_Put_Card_Content_1">Upload Card Content</a> API call, which uses a JSON body parameter; therefore, the method must set a Content-Type header as application/json;charset=UTF-8.</p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>POST /postApi HTTP/1.0
+Host: www.example.com
+Accept: application/json
+Content-Type: application/json;charset=UTF-8
+Content-Length: 23
+{
+  &quot;param1&quot;: &quot;value&quot;,
+  &quot;param2&quot;: &quot;value&quot;
+}    
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="responses">
+<span id="responses"></span><h4>Responses<a class="headerlink" href="#responses" title="Permalink to this headline">¶</a></h4>
+<p>Response data is returned in the JSON format.</p>
+</div>
+</div>
+<div class="section" id="upload-card-content-data">
+<span id="upload-card-content-data"></span><h3><em>3.3.2 Upload Card Content Data</em><a class="headerlink" href="#upload-card-content-data" title="Permalink to this headline">¶</a></h3>
+<p>Uploads card content with a unique content ID to the Bixby Home Server. An API call specifies the content ID, one or more sets of card content data, filter settings, and whether or not to delete previously uploaded card content with the same content ID. All sets of card content data in the same API call will have the same: content ID, upload time, and filter settings.</p>
+<div class="section" id="request">
+<span id="request"></span><h4>Request<a class="headerlink" href="#request" title="Permalink to this headline">¶</a></h4>
+<p>| <strong>Method:</strong>      | HTTPS / POST                                                 | <strong>API result type:</strong> | JSON |
+| —————- | ———————————————————— | ——————– | —- |
+| <strong>URL:</strong>         | /v1/content/_upload                                          |                      |      |
+| <strong>Description:</strong> | Upload one or more sets of card content   from your Partner Content Server to the Bixby Home Server, in order to make   it available for display in Bixby Home cards. |                      |      |
+| <strong>Condition:</strong>   | The Bixby Home card must be approved.                        |                      |      |</p>
+<p><strong>Request Header</strong></p>
+<p>| <strong>Name</strong>      | <strong>Type</strong> | <strong>Multiplicity</strong> | <strong>Description / Constraints</strong>                                |
+| ————- | ——– | —————- | ———————————————————— |
+| x-accesstoken | String   | 1..1             | <em>Required</em>  Value   of the access token issued to the partner |
+| Content-Type  | String   | 1..1             | <em>Required</em>  Must   be set to:   application/json; charset=UTF-8 |</p>
+<p><strong>Request Parameters</strong></p>
+<p>| <strong>Name</strong>       | <strong>Type</strong> | <strong>Multiplicity</strong> | <strong>Description / Restrictions</strong>                               |
+| ————– | ——– | —————- | ———————————————————— |
+| removeOthers   | Boolean  | 0..1             | <em>Optional</em>  Whether or not to delete content that has <strong>not</strong>   been updated after content uploading:   <strong>true</strong>      Remove   non-updated content.   <strong>false</strong>     <em>Default</em>   Do <strong>not</strong> remove non-updated content. |
+| contents       | List     | 1..*             | <em>Required</em>  Content list                                     |
+| └ {content}    | Object   | 1..1             | <em>Required</em>  Content object                                   |
+| └ contentId    | String   | 1..1             | <em>Required</em>  ID of the content, which is unique among   all of your uploaded content |
+| └ contentField | Object   | 0..1             | <em>Required</em>  Name of the content field object                 |
+| └ tag          | List     | 0..1             | Tag settings that   apply to the card content   <em>Conditional</em>  If the Bixby Home card has one or more   selection rules with the Tag filter, this field must be specified. |
+| └ {tag}        | String   | 1..*             | One or more tag   values that apply to the card content   <em>Conditional</em>  If the card has one or more selection rules   with the Tag filter, this field must be specified. |
+| └ country      | List     | 0..1             | Country settings that   apply to the card content   <em>Conditional</em>  If the card has one or more selection rules   with the Country filter, this field must be specified. |
+| └ {country}    | String   | 1..*             | One or more country   values (ISO 3166-1 alpha-2 code) that apply to the card content   <em>Conditional</em>  If the card has one or more selection rules   with the Country filter, this field must be specified. |
+| └ year         | List     | 0..1             | Year settings that   apply to the card content   <em>Conditional</em>  If the card has one or more selection rules   with the Year filter, this field must be specified. |
+| └ {year}       | String   | 1..*             | One or more year   values (YYYY) that apply to the card content   <em>Conditional</em>  If the card has one or more selection rules   with the Year filter, this field must be specified. |
+| └ month        | List     | 0..1             | Month settings that   apply to the card content   <em>Conditional</em>  If the card has one or more selection rules   with the Month filter, this field must be specified. |
+| └ {month}      | String   | 1..*             | One or more   numeric month values (MM) that apply to the card content   <em>Conditional</em>  If the card has one or more selection rules   with the Month filter, this field must be specified. |
+| └ day          | List     | 0..1             | Day settings that   apply to the card content   <em>Conditional</em>  If the card has one or more selection rules   with the Day filter, this field must be specified. |
+| └ {day}        | String   | 1..*             | One or more   numeric date of the month values (DD) that apply to the card content   <em>Conditional</em>  If the card has one or more selection rules   with the Day filter, this field must be specified. |
+| └ timeRange    | List     | 0..1             | Daily time range   settings when card content is relevant   <em>Conditional</em>  If the card has one or more selection rules   with the TimeRange filter, this field must be specified. |
+| └ {timeRange}  | Object   | 1..*             | One or more daily   time ranges ({“start”: “HH:mm”, “end”: “HH:mm”)   when card content is relevant   <em>Conditional</em>  If the card has one or more selection rules   with the TimeRange filter, this field must be specified. |
+| └ start        | String   | 1..1             | Start time (HH:mm   24-hour, inclusive) of the time range when card content is relevant   <em>Conditional</em>  If the card has one or more selection rules   with the TimeRange filter, this field must be specified. |
+| └ end          | String   | 1..1             | End time (HH:mm   24-hour, inclusive) of the time range when card content is relevant   <em>Conditional</em>  If the card has one or more selection rules   with the TimeRange filter, this field must be specified. |
+| └ weather      | List     | 0..1             | Weather settings that   apply to the card content   <em>Conditional</em>  If the card has one or more selection rules   with the Weather filter, this field must be specified. |
+| └ {weather}    | Integer  | 1..*             | One or   more weather values that apply to the card content:   <em>0: sunny</em>   <em>1: partly sunny</em>   <em>2: cloud</em>   <em>3: fog</em>   <em>4, 5, 6, 7, 21:   raining</em>   <em>8, 9, 20: thunder</em>   <em>10, 11, 12, 13,   14, 15, 16: snowing</em>   <em>17: hot</em>   <em>18: cold</em>   <em>19: windy</em>         <em>Conditional</em>  If the card has one or more selection rules   with the Weather filter, this field must be specified. |
+| └ data         | List     | 1..1             | <em>Required</em>  One or more sets of card content data to be   uploaded |
+| └ {data}       | Object   | 1..*             | <em>Required</em>  One set of card content data   <strong>Note:</strong>    Each set of card content data must specify a collection of tag, type,   property, and key parameter settings for each element component required by   the Bixby Home card’s template. |
+| └ tag          | Int      | 1..1             | <em>Required</em>  ID number of the element component               |
+| └ type         | String   | 1..1             | <em>Required</em>  Kind of data in the element component   For   details, see <a class="reference external" href="#_Appendix_A._Content">Appendix A. Content Data Types</a> |
+| └   property   | Object   | 1..1             | <em>Required</em>  Property object for the element component        |
+| └ {key}        | -        | 1..*             | <em>Required</em>  Data subtype and value of the element   component (“subtype”: “value”)   For   details, see <a class="reference external" href="#_Appendix_A._Content">Appendix A. Content Data Types</a> |</p>
+<p><strong>Sample Request Code</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>POST https://[service domain]/v1/content/_upload
+{
+    &quot;removeOthers&quot; : true,
+    &quot;contents&quot; : [
+        {
+            &quot;contentId&quot; : &quot;content-1234&quot;,
+            &quot;contentField&quot; : {
+                &quot;tag&quot; : [&quot;tag1&quot;, &quot;tag2&quot;],
+                &quot;country&quot; : [&quot;KR&quot;, &quot;US&quot;, &quot;GB&quot;],
+                &quot;year&quot; : [&quot;2017&quot;, &quot;2018&quot;],
+                &quot;month&quot; : [&quot;03&quot;, &quot;11&quot;],
+                &quot;day&quot; : [&quot;01&quot;, &quot;15&quot;],
+                &quot;timeRange&quot; : [
+                {
+                    &quot;start&quot; : &quot;12:00&quot;,
+                    &quot;end&quot; : &quot;13:00&quot;
+                },
+                {
+                    &quot;start&quot; : &quot;18:00&quot;,
+                    &quot;end&quot; : &quot;19:00&quot;
+                }
+                ],
+                &quot;weather&quot; : [0, 17]
+            },
+            &quot;data&quot; : [
+            {
+                    &quot;tag&quot; : 1,
+                    &quot;type&quot; : &quot;VIDEO&quot;,
+                    &quot;property&quot; : {
+                        &quot;videoPath&quot; : &quot;https://img.kr.news.samsung.com/kr/wp-content/uploads/2017/04/galaxys8_007.mp4&quot;
+                    }
+                },
+            {
+                    &quot;tag&quot; : 2,
+                    &quot;type&quot; : &quot;TEXT&quot;,
+                    &quot;property&quot; : {
+                        &quot;rawString&quot; : &quot;Samsung Galaxy S8, S8+ Launch&quot;
+                    }
+                },
+            {
+                    &quot;tag&quot; : 3,
+                    &quot;type&quot; : &quot;ACTION&quot;,
+                    &quot;property&quot; : {
+                        &quot;intent&quot; : &quot;https://news.samsung.com/kr/?p=325656&quot;
+                    }
+                },
+                ...
+            ]
+        },
+        ...
+    ]
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="response">
+<span id="response"></span><h4>Response<a class="headerlink" href="#response" title="Permalink to this headline">¶</a></h4>
+<p>| name          | Type   | Multiplicity | Description   / Restrictions                                 |
+| ————- | —— | ———— | ———————————————————— |
+| resultCode    | Int    | 1..1         | Result code   Success:    1000   Failure:      1001, 1002, 1100, 1101, 1201, 1202,   7001, 7999   For   details, see <a class="reference external" href="#_Appendix_B._API">Appendix B. API Result Codes</a>. |
+| resultMessage | String | 1..1         | Result   message   For   details, see <a class="reference external" href="#_Appendix_B._API">Appendix B. API Result Codes</a>. |</p>
+<p><strong>Sample Response Code</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>200 OK
+{
+    &quot;resultCode&quot;: 1000,
+    &quot;resultMessage&quot;: &quot;Success&quot;
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-uploaded-card-content-data">
+<span id="get-uploaded-card-content-data"></span><h3><em>3.3.3 Get Uploaded Card Content Data</em><a class="headerlink" href="#get-uploaded-card-content-data" title="Permalink to this headline">¶</a></h3>
+<p>Retrieves the specified set of card content data that was previously uploaded to the Bixby Home Server.</p>
+<div class="section" id="request">
+<span id="id2"></span><h4>Request<a class="headerlink" href="#request" title="Permalink to this headline">¶</a></h4>
+<p>| <strong>Method:</strong>      | HTTPS / GET                                                  | <strong>API result type:</strong> | JSON |
+| —————- | ———————————————————— | ——————– | —- |
+| <strong>URL:</strong>         | /v1/content/{contentId}                                      |                      |      |
+| <strong>Description:</strong> | Retrieve the Bixby Home card content   data from the Bixby Home Server. |                      |      |
+| <strong>Condition:</strong>   | The Bixby card must be registered via   the Bixby Home partner portal. |                      |      |</p>
+<p><strong>Request Header</strong></p>
+<p>| <strong>Name</strong>      | <strong>Type</strong> | <strong>Multiplicity</strong> | <strong>Description / Restrictions</strong>                               |
+| ————- | ——– | —————- | ———————————————————— |
+| x-accesstoken | String   | 1..1             | <em>Required</em>  Value   of the access token issued to the partner. |</p>
+<p><strong>Request Parameters</strong></p>
+<p>| <strong>Name</strong>  | <strong>Type</strong> | <strong>Multiplicity</strong> | <strong>Description / Constraints</strong>                                |
+| ——— | ——– | —————- | ———————————————————— |
+| contentId | String   | 1..1             | <em>Required</em>  ID of the content, which is unique among   all of your uploaded content |</p>
+<p><strong>Sample Request Code</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>GET https://[service domain]/partner/v1/content/content-1234
+</pre></div>
+</div>
+</div>
+<div class="section" id="response">
+<span id="id3"></span><h4>Response<a class="headerlink" href="#response" title="Permalink to this headline">¶</a></h4>
+<p>| Name          | Type   | Multiplicity | Description   / Restrictions                                 |
+| ————- | —— | ———— | ———————————————————— |
+| resultCode    | Int    | 1..1         | Result code   Success:    1000   Failure:      1001, 1002, 1100, 1101, 1201, 1202,   7001, 7999   For details, see <a class="reference external" href="#_Appendix_B._API">Appendix   B. API Result Codes</a>. |
+| resultMessage | String | 1..1         | Result message   For details, see <a class="reference external" href="#_Appendix_B._API">Appendix   B. API Result Codes</a>. |
+| content       | Object | 0..1         | Content   object   If previously   uploaded content with the specified content ID is not in the Bixby Home   Server, then this field will be not be specified.   For   details, see <a class="reference external" href="#_Put_Card_Content_1">Upload Card   Content Data</a> |</p>
+<p><strong>Sample Response Code</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>200 OK
+{
+    &quot;resultCode&quot; : 1000,
+    &quot;resultMessage&quot; : &quot;Success&quot;,
+    &quot;content&quot; : {
+        &quot;contentId&quot; : &quot;content-1234&quot;,
+        &quot;contentField&quot; : {
+            &quot;tag&quot; : [&quot;tag1&quot;, &quot;tag2&quot;],
+            &quot;country&quot; : [&quot;KR&quot;, &quot;US&quot;, &quot;GB&quot;],
+            &quot;year&quot; : [&quot;2017&quot;, &quot;2018&quot;],
+            &quot;month&quot; : [&quot;03&quot;, &quot;11&quot;],
+            &quot;day&quot; : [&quot;01&quot;, &quot;15&quot;],
+            &quot;timeRange&quot; : [
+            {
+                &quot;start&quot; : &quot;12:00&quot;,
+                &quot;end&quot; : &quot;13:00&quot;
+            },
+            {
+                &quot;start&quot; : &quot;18:00&quot;,
+                &quot;end&quot; : &quot;19:00&quot;
+            }
+            ],
+            &quot;weather&quot; : [0, 17]
+        },
+        &quot;data&quot; : [
+        {
+                &quot;tag&quot; : 1,
+                &quot;type&quot; : &quot;VIDEO&quot;,
+                &quot;property&quot; : {
+                    &quot;videoPath&quot; : &quot;https://img.kr.news.samsung.com/kr/wp-content/uploads/2017/04/galaxys8_007.mp4&quot;
+                }
+            },
+        {
+                &quot;tag&quot; : 2,
+                &quot;type&quot; : &quot;TEXT&quot;,
+                &quot;property&quot; : {
+                    &quot;rawString&quot; : &quot;Samsung Galaxy S8, S8+ Launch&quot;
+                }
+            },
+        {
+                &quot;tag&quot; : 3,
+                &quot;type&quot; : &quot;ACTION&quot;,
+                &quot;property&quot; : {
+                    &quot;intent&quot; : &quot;https://news.samsung.com/kr/?p=325656&quot;
+                }
+            },
+            ...
+        ]
+    }
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="delete-uploaded-card-content-data">
+<span id="delete-uploaded-card-content-data"></span><h3><em>3.3.4 Delete Uploaded Card Content Data</em><a class="headerlink" href="#delete-uploaded-card-content-data" title="Permalink to this headline">¶</a></h3>
+<p>Removes the specified set of card content data previously uploaded to the Bixby Home Server.</p>
+<div class="section" id="request">
+<span id="id4"></span><h4>Request<a class="headerlink" href="#request" title="Permalink to this headline">¶</a></h4>
+<p>| <strong>Method:</strong>      | HTTPS / DELETE                                               | <strong>API result type:</strong> | JSON |
+| —————- | ———————————————————— | ——————– | —- |
+| <strong>URL:</strong>         | /v1/content/{contentId}                                      |                      |      |
+| <strong>Description:</strong> | Delete the specified card content from the   Bixby Home Server. |                      |      |
+| <strong>Condition:</strong>   | The Bixby card must be registered via   the Bixby Home partner portal. |                      |      |</p>
+<p><strong>Request Header</strong></p>
+<p>| <strong>Name</strong>      | <strong>Type</strong> | <strong>Multiplicity</strong> | <strong>Description / Restrictions</strong>                               |
+| ————- | ——– | —————- | ———————————————————— |
+| x-accesstoken | String   | 1..1             | <em>Required</em>  Value   of the access token issued to the partner |</p>
+<p><strong>Request Parameters</strong></p>
+<p>| Name      | Type   | Multiplicity | Description   / Constraints                                  |
+| ——— | —— | ———— | ———————————————————— |
+| contentId | String | 1..1         | <em>Required</em>  ID of the content, which is   unique among all of your uploaded content |</p>
+<p><strong>Sample Request Code</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>DELETE https://[service domain]/partner/v1/content/content-1234
+</pre></div>
+</div>
+</div>
+<div class="section" id="response">
+<span id="id5"></span><h4>Response<a class="headerlink" href="#response" title="Permalink to this headline">¶</a></h4>
+<p>| Name          | Type   | Multiplicity | Description   / Restrictions                                 |
+| ————- | —— | ———— | ———————————————————— |
+| resultCode    | Int    | 1..1         | Result code:   Success:    1000   Failure:      1001, 1002, 1100, 1101, 1201, 1202,   7001, 7999   For details, see <a class="reference external" href="#_Appendix_B._API">Appendix   B. API Result Codes</a>. |
+| resultMessage | String | 1..1         | Result   message   For   details, see <a class="reference external" href="#_Appendix_B._API">Appendix B. API Result Codes</a>. |</p>
+<p><strong>Sample Response Code</strong></p>
+<div class="highlight-http notranslate"><div class="highlight"><pre><span></span>200 OK
+{
+    &quot;resultCode&quot;: 1000,
+    &quot;resultMessage&quot;: &quot;Success&quot;
+}
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="how-to-test-of-developed-card">
+<span id="how-to-test-of-developed-card"></span><h1>4. How to test of developed card.<a class="headerlink" href="#how-to-test-of-developed-card" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="manifest-side-loading">
+<span id="manifest-side-loading"></span><h2>4.1 Manifest side-loading<a class="headerlink" href="#manifest-side-loading" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="loading-local-card-manifest-file">
+<span id="loading-local-card-manifest-file"></span><h3>4.1.1 Loading local card manifest file<a class="headerlink" href="#loading-local-card-manifest-file" title="Permalink to this headline">¶</a></h3>
+<p>Without registering the card details in the CP portal one can make the card and test it on Bixby Home in supported device. Even though it does not provide full features, one can easily check how the card looks in Bixby Home.</p>
+<ol class="simple">
+<li><strong>Modify last item of “card_test.json” file for your card. (If you want to add more cards, you can use cardNo between 85000 to 89999.)</strong></li>
+</ol>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>{
+
+    &quot;idNo&quot;: 81000,
+    &quot;templateId&quot;: &quot;ENTER_YOUR_SELECTED_TEMPLATE&quot;,
+    &quot;header&quot;: {
+        &quot;title&quot;: &quot;Title For Your Card&quot;,
+        &quot;onClick&quot;: &quot;http://developer.android.com&quot;,
+        &quot;buttons&quot;: &quot;refresh|more&quot;, //This can be &quot;close&quot;, but cannot be used together. (ex) refresh|more|close (X)
+        &quot;moreMenu&quot;: &quot;pin|hide|off&quot;
+    }
+
+}
+</pre></div>
+</div>
+<p>If you want to launch your own application with title click, fill your application “URI” here. This will be parsed like this. “Intent.parseUri(“URI”, Intent.URI_INTENT_SCHEME);”</p>
+<p>Here is an example,</p>
+<p>“onClick”: “intent:#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=com.example.spage.card;end”,</p>
+<p><img alt="" src="media/image20.png" />{width=”3.0972222222222223in” height=”1.8125in”}</p>
+<p><img alt="" src="media/image21.png" />{width=”3.201388888888889in” height=”1.7361111111111112in”}</p>
+<p><img alt="" src="media/image22.png" />{width=”2.9305555555555554in” height=”1.6944444444444444in”}</p>
+<ol class="simple">
+<li><strong>Make “show_me_the_card.test “ folder in your device root and add your modified “card_test.json” file.</strong></li>
+<li><strong>Enable Developer options by going to, Bixby Home Settings &gt; About Bixby &gt; Click 10 times on Bixby icon.</strong></li>
+<li><strong>Click on Developer option and select “Load local test cards”. “Your cards are loaded” toast will appear.</strong></li>
+<li><strong>Your cards will be displayed in Bixby Home application.</strong></li>
+</ol>
+</div>
+<div class="section" id="testing-custom-menu-v2">
+<span id="testing-custom-menu-v2"></span><h3>4.1.2 Testing custom menu (v2)<a class="headerlink" href="#testing-custom-menu-v2" title="Permalink to this headline">¶</a></h3>
+<p>Adding custom menu under more option is available since SDK API version 2. Actually it should be set on Bixby Home portal site. But for the local test, you can add it on the test json file, like below. Then the menu will appear on the option menu of that card.</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;header&quot;: {
+    ...
+    &quot;customMenus&quot;: [
+        {
+            &quot;title&quot; : &quot;My menu&quot;,
+            &quot;onClick&quot; : &quot;Uri to Jump&quot;
+        }
+    ]
+
+}
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-instant-update-v2">
+<span id="testing-instant-update-v2"></span><h3>4.1.3 Testing instant update (v2)<a class="headerlink" href="#testing-instant-update-v2" title="Permalink to this headline">¶</a></h3>
+<p>To do the local test of instant update, add the following block. With that interval, Bixby Home will call the onInstantUpdate method of your card. This is added in SDK API v2, so make sure that Bixby Home version you’ve installed supports SDK API v2 or later. (Refer to 2.5 Instant Update.)</p>
+<div class="highlight-json notranslate"><div class="highlight"><pre><span></span>&quot;cards&quot;: [
+
+{
+
+        ...
+
+        &quot;properties&quot;: {
+
+            &quot;updateInterval&quot; : &quot;5&quot;
+
+            ...
+
+        }
+
+        ...
+
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="manifest-fetched-from-the-server">
+<span id="manifest-fetched-from-the-server"></span><h2>4.2 Manifest fetched from the server<a class="headerlink" href="#manifest-fetched-from-the-server" title="Permalink to this headline">¶</a></h2>
+<p>Instead of loading the local manifest file, you can fetch manifest file from the CP portal server with registered your card information.</p>
+<p>To do this, at first you have to complete the card registration procedure on the server, and the issued card id number should be used in your application code and cards.xml file.</p>
+<p>Your application key hash should be registered correctly.(Refer to 4.3. How to generate Key hash)</p>
+<p>Then follow below steps. Your card will appear on Bixby Home card stream, if the appearance condition is met.</p>
+<ol class="simple">
+<li>Enable Developer options by going to, Bixby Home Settings &gt; About Bixby &gt; Click 10 times on Bixby icon.</li>
+<li>Click on Developer option and select “Fetch test cards from server” and enter your application package name or Card ID with prefix ‘#’ which was assigned to your card in Bixby Home partner portal. You can enter more than one package name with ‘space’ divider. (example, com.example.app.cp or #559900000)</li>
+<li>Click “ok” then your card information will be fetched from the server.</li>
+</ol>
+</div>
+<div class="section" id="how-to-generate-key-hash">
+<span id="how-to-generate-key-hash"></span><h2>4.3 How to generate Key hash<a class="headerlink" href="#how-to-generate-key-hash" title="Permalink to this headline">¶</a></h2>
+<p>The key hash string is required to register your card on the Bixby Home portal server.</p>
+<ol class="simple">
+<li>Using the default keystore only for the testing (with Android default debug keystore )</li>
+</ol>
+<ul class="simple">
+<li>Linux: keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64</li>
+<li>Windows: keytool -exportcert -alias androiddebugkey -keystore %HOMEPATH%\.android\debug.keystore | openssl sha1 -binary | openssl base64</li>
+</ul>
+<ol>
+<li><p class="first">Using you own official keystore (For the official release, the same keystore of your application package should be used.)</p>
+<div class="highlight-co notranslate"><div class="highlight"><pre><span></span>keytool -exportcert -alias &lt;RELEASE_KEY_ALIAS&gt; -keystore &lt;RELEASE_KEY_PATH&gt; | openssl sha1 -binary | openssl base64
+</pre></div>
+</div>
+</li>
+</ol>
+<ol>
+<li><p class="first">If you can only have the certificate, not keystore.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openssl</span> <span class="n">x509</span> <span class="o">-</span><span class="ow">in</span> <span class="o">&lt;</span><span class="n">YOUR_CERT</span><span class="o">&gt;.</span><span class="n">crt</span> <span class="o">-</span><span class="n">outform</span> <span class="n">der</span> <span class="o">|</span> <span class="n">openssl</span> <span class="n">sha1</span> <span class="o">-</span><span class="n">binary</span> <span class="o">|</span> <span class="n">openssl</span> <span class="n">base64</span>
+
+<span class="ow">or</span>
+
+<span class="n">cat</span> <span class="o">&lt;</span><span class="n">YOUR_CERT</span><span class="o">&gt;.</span><span class="n">der</span> <span class="o">|</span> <span class="n">openssl</span> <span class="n">sha1</span> <span class="o">-</span><span class="n">binary</span> <span class="o">|</span> <span class="n">openssl</span> <span class="n">base64</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<ol>
+<li><p class="first">If you want to extract it from the signed apk,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">keytool</span> <span class="o">-</span><span class="nb">list</span> <span class="o">-</span><span class="n">printcert</span> <span class="o">-</span><span class="n">jarfile</span> <span class="o">&lt;</span><span class="n">YOUR_PACKAGE</span><span class="o">&gt;.</span><span class="n">apk</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">Po</span> <span class="s2">&quot;(?&lt;=SHA1:) .*&quot;</span> <span class="o">|</span> <span class="n">xxd</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">p</span> <span class="o">|</span> <span class="n">openssl</span> <span class="n">base64</span>
+
+<span class="ow">or</span>
+
+<span class="n">unzip</span> <span class="o">-</span><span class="n">p</span> <span class="o">&lt;</span><span class="n">your_package</span><span class="o">.</span><span class="n">apk</span><span class="o">&gt;</span> <span class="n">META</span><span class="o">-</span><span class="n">INF</span><span class="o">/</span><span class="n">CERT</span><span class="o">.</span><span class="n">RSA</span> <span class="o">|</span> <span class="n">openssl</span> <span class="n">pkcs7</span> <span class="o">-</span><span class="n">print_certs</span> <span class="o">-</span><span class="n">inform</span> <span class="n">der</span> <span class="o">|</span> <span class="n">openssl</span> <span class="n">x509</span> <span class="o">-</span><span class="n">outform</span> <span class="n">der</span> <span class="o">|</span> <span class="n">openssl</span> <span class="n">sha1</span> <span class="o">-</span><span class="n">binary</span> <span class="o">|</span> <span class="n">openssl</span> <span class="n">base64</span>
+</pre></div>
+</div>
+</li>
+</ol>
+<p>key hash value example:</p>
+<p>“rNc7uTDdaT/iAl6mw02sudkyje8=”</p>
+</div>
+<div class="section" id="how-to-check-the-sdk-api-version-of-bixby-home">
+<span id="how-to-check-the-sdk-api-version-of-bixby-home"></span><h2>4.4 How to check the SDK API version of Bixby Home<a class="headerlink" href="#how-to-check-the-sdk-api-version-of-bixby-home" title="Permalink to this headline">¶</a></h2>
+<p>To get the API version of Bixby Home package installed on the device,</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">SpageCardSdk</span> <span class="n">csdk</span> <span class="o">=</span> <span class="k">new</span> <span class="n">SpageCardSdk</span><span class="o">();</span>
+
+<span class="k">try</span> <span class="o">{</span>
+
+    <span class="n">csdk</span><span class="o">.</span><span class="na">initialize</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">SsdkUnsupportedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="c1">// Not supported device</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kt">int</span> <span class="n">apiVersion</span> <span class="o">=</span> <span class="n">csdk</span><span class="o">.</span><span class="na">getApiVersionOfSpage</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+
+<span class="k">if</span> <span class="o">(</span><span class="n">apiVersion</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// SDK feature is not supported&#39;</span>
+
+<span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+    <span class="c1">// SDK Api version is equal or more than 1.</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="resolving-build-errors-to-migrate-from-older-sdk-library-to-v1-0-3-or-later">
+<span id="resolving-build-errors-to-migrate-from-older-sdk-library-to-v1-0-3-or-later"></span><h2>4.5 Resolving build errors to migrate from older SDK library to v1.0.3 or later<a class="headerlink" href="#resolving-build-errors-to-migrate-from-older-sdk-library-to-v1-0-3-or-later" title="Permalink to this headline">¶</a></h2>
+<p>If you has been using SDK library before v1.0.3 and move to use that version or later, please resolve build errors as following guide.</p>
+<p>The below method of CardContentProvider class had been deleted at v1.0.3 library.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">protected</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">onReceiveEvent</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">CardContentManager</span> <span class="n">manager</span><span class="o">,</span> <span class="kt">int</span> <span class="n">cardId</span><span class="o">,</span> <span class="n">String</span> <span class="n">event</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Instead, to extend event information, following method was added. (last argument type is changed.)</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onReceiveEvent</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">CardContentManager</span> <span class="n">manager</span><span class="o">,</span> <span class="kt">int</span> <span class="n">cardId</span><span class="o">,</span> <span class="n">Event</span> <span class="n">event</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>So please change the method on your class inherited from CardContentProvider, to latter one.</p>
+<p>And in your implementation body, replace string type ‘event’ argument with <strong>event.getEventName</strong>().</p>
+</div>
+<div class="section" id="bixby-home-card-integration-auto-testing-guide">
+<span id="bixby-home-card-integration-auto-testing-guide"></span><h2>4.6 Bixby Home card integration “Auto-testing” guide<a class="headerlink" href="#bixby-home-card-integration-auto-testing-guide" title="Permalink to this headline">¶</a></h2>
+<p>In order to run self-test on Bixby home card creation process, developer must have card ID generated from the portal. Developer will have real card ID when you save your card on portal. “Auth-testing” method will help developer to verify card implementation for both server based card and app based card. It also provides error message to give basic information for resolution.</p>
+<p><strong><em>How to enter Bixby Home “Developer mode”</em></strong></p>
+<p>Developer can download SDK package and install the reference app to develop Bixby Home card. The “Developer mode” menu is only available on reference app in SDK package from Bixby Home partner portal(<a class="reference external" href="https://bixbyhome.samsungfeed.com">https://bixbyhome.samsungfeed.com</a>). Once you install the reference app from the SDK package, you will be able to use “Developer mode” with following step.</p>
+<p><img alt="" src="media/image23.png" />{width=”5.850533683289589in” height=”4.572916666666667in”}</p>
+<p><strong><em>How to run “Auto-testing”</em></strong></p>
+<p>Once you turn on the Developer mode, you will be able to run “Auto-testing” for end-to-end test. With “Auto-testing”, you will be able to check whether you have correctly done everything.</p>
+<p><img alt="" src="media/image24.png" />{width=”5.854166666666667in” height=”3.7970778652668415in”}</p>
+<p>You will need to input your package name or card id with # on both “Fetch cards from server”. You will see your card on setting menu. <strong>Make sure you turn on your card to run “Auto-testing”</strong>. After you turn on your card on settings, go to “Auto-testing” and input your card id with # or package name to run. With package name, “Auto-testing” tool will grab card ID from your apk and test all cards which you defined on cards.xml.</p>
+<p>Finally you are able to see “Auto-testing” result. If you get pass result, please submit your card to report Bixby Home test team.</p>
+</div>
+</div>
+<div class="section" id="appendix-a-sample-application">
+<span id="appendix-a-sample-application"></span><h1>Appendix A. Sample Application<a class="headerlink" href="#appendix-a-sample-application" title="Permalink to this headline">¶</a></h1>
+<p>This chapter explains User interface concept and example codes of each template card of Sample Application. (If you want to see all supported example cards, install sample application and execute it first. After it, follow side-loading procedure in Appendix.)</p>
+<div class="section" id="utility-shortcut-basic">
+<span id="utility-shortcut-basic"></span><h2>1 “UTILITY_SHORTCUT_BASIC”<a class="headerlink" href="#utility-shortcut-basic" title="Permalink to this headline">¶</a></h2>
+<p>This template card is suitable for shortcut type application.</p>
+<div class="section" id="gui-preview">
+<span id="gui-preview"></span><h3>1.1 GUI preview<a class="headerlink" href="#gui-preview" title="Permalink to this headline">¶</a></h3>
+<p>This is a sample preview of shortcut type template card.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image8.png" />{width=”2.8285717410323707in” height=”2.0857152230971128in”}</p>
+</div>
+<div class="section" id="field-area">
+<span id="field-area"></span><h3>1.2 Field Area<a class="headerlink" href="#field-area" title="Permalink to this headline">¶</a></h3>
+<p>This is field area definition of shortcut type template card from UX guide.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image9.png" />{width=”2.6462029746281717in” height=”2.1878051181102363in”}</p>
+</div>
+<div class="section" id="field-number">
+<span id="field-number"></span><h3>1.3 Field Number<a class="headerlink" href="#field-number" title="Permalink to this headline">¶</a></h3>
+<p>This is field number definition of shortcut type template card. This will help in creating FieldData and fill the CardContent.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image10.png" />{width=”2.6774573490813647in” height=”1.8127526246719161in”}</p>
+</div>
+<div class="section" id="field-number-table">
+<span id="field-number-table"></span><h3>1.4 Field Number Table<a class="headerlink" href="#field-number-table" title="Permalink to this headline">¶</a></h3>
+<p>This is data type definition of each field.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image11.png" />{width=”3.615087489063867in” height=”3.052509842519685in”}</p>
+</div>
+<div class="section" id="sample-codes">
+<span id="sample-codes"></span><h3>1.5 Sample Codes<a class="headerlink" href="#sample-codes" title="Permalink to this headline">¶</a></h3>
+<p>The details can be referenced in sample application source codes.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import static</span> <span class="nn">com.samsung.android.sdk.spage.card.CardContent.*</span><span class="o">;</span>
+
+<span class="o">...</span>
+
+<span class="kd">private</span> <span class="n">CardContent</span> <span class="nf">putShortcutData</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span><span class="kt">int</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="n">Uri</span> <span class="n">image1Uri</span> <span class="o">=</span> <span class="n">getUriToDrawable</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">clock</span><span class="o">);</span>
+
+    <span class="n">CardContent</span> <span class="n">content</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CardContent</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_1</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;[TEST]GALAXY APPS&quot;</span><span class="o">));</span> <span class="c1">// Not Mandatory data</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_2</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;popular app&quot;</span><span class="o">));</span> <span class="c1">// Not Mandatory data</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_3</span><span class="o">,</span> <span class="k">new</span> <span class="n">ImageData</span><span class="o">().</span><span class="na">setImageUri</span><span class="o">(</span><span class="n">image1Uri</span><span class="o">.</span><span class="na">toString</span><span class="o">()));</span> <span class="c1">// Mandatory data</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_4</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Clock&quot;</span><span class="o">));</span> <span class="c1">// Mandatory data</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_5</span><span class="o">,</span> <span class="k">new</span> <span class="n">RectData</span><span class="o">().</span><span class="na">setIntent</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">().</span><span class="na">setData</span><span class="o">(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;http://www.samsung.com&quot;</span><span class="o">))));</span> <span class="c1">// Mandatory data</span>
+
+    <span class="o">...</span>
+
+    <span class="n">Uri</span> <span class="n">image5Uri</span> <span class="o">=</span> <span class="n">getUriToDrawable</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">camera</span><span class="o">);</span>
+
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_15</span><span class="o">,</span> <span class="k">new</span> <span class="n">ImageData</span><span class="o">().</span><span class="na">setImageUri</span><span class="o">(</span><span class="n">image5Uri</span><span class="o">.</span><span class="na">toString</span><span class="o">()));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_16</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Camera&quot;</span><span class="o">));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_17</span><span class="o">,</span> <span class="k">new</span> <span class="n">RectData</span><span class="o">().</span><span class="na">setIntent</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">().</span><span class="na">setData</span><span class="o">(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;http://www.samsung.com&quot;</span><span class="o">))));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_18</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;VIEW MORE&quot;</span><span class="o">).</span><span class="na">setIntent</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">().</span><span class="na">setData</span><span class="o">(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;https://www.samsung.com&quot;</span><span class="o">))));</span>
+
+    <span class="k">return</span> <span class="n">content</span><span class="o">;</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="utility-list-image">
+<span id="utility-list-image"></span><h2>2 “UTILITY_LIST_IMAGE”<a class="headerlink" href="#utility-list-image" title="Permalink to this headline">¶</a></h2>
+<p>This template card is suitable for list type application.</p>
+<div class="section" id="gui-preview">
+<span id="id6"></span><h3>2.1 GUI preview<a class="headerlink" href="#gui-preview" title="Permalink to this headline">¶</a></h3>
+<p>This is a sample preview of list type template card.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image12.png" />{width=”2.85in” height=”2.25in”}</p>
+</div>
+<div class="section" id="field-area">
+<span id="id7"></span><h3>2.2 Field Area<a class="headerlink" href="#field-area" title="Permalink to this headline">¶</a></h3>
+<p>This is filed area definition of list type template card.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image13.png" />{width=”2.6566207349081363in” height=”2.1044608486439196in”}</p>
+</div>
+<div class="section" id="field-number">
+<span id="id8"></span><h3>2.3 Field Number<a class="headerlink" href="#field-number" title="Permalink to this headline">¶</a></h3>
+<p>This is filed number definition of list type template card.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image14.png" />{width=”2.708711723534558in” height=”1.6877351268591425in”}</p>
+</div>
+<div class="section" id="field-number-table">
+<span id="id9"></span><h3>2.4 Field Number Table<a class="headerlink" href="#field-number-table" title="Permalink to this headline">¶</a></h3>
+<p>This is data type definition of each field.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image15.png" />{width=”3.9067957130358706in” height=”2.4065857392825896in”}</p>
+</div>
+<div class="section" id="sample-codes">
+<span id="id10"></span><h3>2.5 Sample Codes<a class="headerlink" href="#sample-codes" title="Permalink to this headline">¶</a></h3>
+<p>The details can be referenced in sample application source codes.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import static</span> <span class="nn">com.samsung.android.sdk.spage.card.CardContent.*</span><span class="o">;</span>
+
+<span class="o">...</span>
+
+<span class="kd">private</span> <span class="n">CardContent</span> <span class="nf">putListImageData</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="kt">int</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="n">CardContent</span> <span class="n">content</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CardContent</span><span class="o">(</span><span class="n">id</span><span class="o">);</span>
+
+    <span class="n">Uri</span> <span class="n">image1Uri</span> <span class="o">=</span> <span class="n">getUriToDrawable</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">camera</span><span class="o">);</span>
+
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_1</span><span class="o">,</span> <span class="k">new</span> <span class="n">ImageData</span><span class="o">().</span><span class="na">setImageUri</span><span class="o">(</span><span class="n">image1Uri</span><span class="o">.</span><span class="na">toString</span><span class="o">()));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_2</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;search camera&quot;</span><span class="o">));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_3</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Camera&quot;</span><span class="o">));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_4</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;samsung&quot;</span><span class="o">));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_5</span><span class="o">,</span> <span class="k">new</span> <span class="n">RectData</span><span class="o">().</span><span class="na">setIntent</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">().</span><span class="na">setData</span><span class="o">(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;https://www.google.com/search?q=camera&quot;</span><span class="o">))));</span>
+
+    <span class="o">...</span>
+
+    <span class="n">Uri</span> <span class="n">image3Uri</span> <span class="o">=</span> <span class="n">getUriToDrawable</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">R</span><span class="o">.</span><span class="na">drawable</span><span class="o">.</span><span class="na">notes</span><span class="o">);</span>
+
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_11</span><span class="o">,</span> <span class="k">new</span> <span class="n">ImageData</span><span class="o">().</span><span class="na">setImageUri</span><span class="o">(</span><span class="n">image3Uri</span><span class="o">.</span><span class="na">toString</span><span class="o">()));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_12</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;search samsung notes&quot;</span><span class="o">));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_13</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;samsung notes&quot;</span><span class="o">));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_14</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;samsung&quot;</span><span class="o">));</span>
+    <span class="n">content</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_15</span><span class="o">,</span> <span class="k">new</span> <span class="n">RectData</span><span class="o">().</span><span class="na">setIntent</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">().</span><span class="na">setData</span><span class="o">(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;https://www.google.com/search?q=samsung notes&quot;</span><span class="o">))));</span>
+
+    <span class="k">return</span> <span class="n">content</span><span class="o">;</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="multimedia-musicplayer-basic">
+<span id="multimedia-musicplayer-basic"></span><h2>3 “MULTIMEDIA_MUSICPLAYER_BASIC”<a class="headerlink" href="#multimedia-musicplayer-basic" title="Permalink to this headline">¶</a></h2>
+<p>This template card is suitable for multimedia music player type application.</p>
+<div class="section" id="gui-preview">
+<span id="id11"></span><h3>3.1 GUI preview<a class="headerlink" href="#gui-preview" title="Permalink to this headline">¶</a></h3>
+<p>This is a sample preview of multimedia music player type template card.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image16.png" />{width=”2.721429352580927in” height=”2.1928576115485563in”}</p>
+</div>
+<div class="section" id="field-area">
+<span id="id12"></span><h3>3.2 Field Area<a class="headerlink" href="#field-area" title="Permalink to this headline">¶</a></h3>
+<p>This is filed area definition of multimedia music player type template card.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image17.png" />{width=”2.68787510936133in” height=”2.604529746281715in”}</p>
+</div>
+<div class="section" id="field-number">
+<span id="id13"></span><h3>3.3 Field Number<a class="headerlink" href="#field-number" title="Permalink to this headline">¶</a></h3>
+<p>This is filed number definition of multimedia music player type template card.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image18.png" />{width=”2.7295472440944883in” height=”2.6566207349081363in”}</p>
+</div>
+<div class="section" id="field-number-table">
+<span id="id14"></span><h3>3.4 Field Number Table<a class="headerlink" href="#field-number-table" title="Permalink to this headline">¶</a></h3>
+<p>This is data type definition of each field.</p>
+<p><img alt="" src="D:/ztmp/manual/developer%20guide/media/image19.png" />{width=”3.8859590988626422in” height=”1.802334864391951in”}</p>
+</div>
+<div class="section" id="sample-codes">
+<span id="id15"></span><h3>3.5 Sample Codes<a class="headerlink" href="#sample-codes" title="Permalink to this headline">¶</a></h3>
+<p>The details can be referenced in sample application source codes.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kn">import static</span> <span class="nn">com.samsung.android.sdk.spage.card.CardContent.*</span><span class="o">;</span>
+
+<span class="o">...</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">updateMusicCardData</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">MusicCardData</span> <span class="n">musicCardData</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="n">CardContent</span> <span class="n">cardContent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CardContent</span><span class="o">(</span><span class="n">MUSIC_CARD_ID</span><span class="o">);</span>
+
+    <span class="k">if</span> <span class="o">(</span><span class="n">musicCardData</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="n">cardContent</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_1</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="n">musicCardData</span><span class="o">.</span><span class="na">track</span><span class="o">.</span><span class="na">getTitle</span><span class="o">()));</span>
+        <span class="n">cardContent</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_2</span><span class="o">,</span> <span class="k">new</span> <span class="n">TextData</span><span class="o">().</span><span class="na">setText</span><span class="o">(</span><span class="n">musicCardData</span><span class="o">.</span><span class="na">track</span><span class="o">.</span><span class="na">getArtist</span><span class="o">()));</span>
+        <span class="n">cardContent</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_3</span><span class="o">,</span>
+
+        <span class="k">new</span> <span class="n">ImageData</span><span class="o">().</span><span class="na">setImageUri</span><span class="o">(</span><span class="s">&quot;content://media/external/audio/albumart/&quot;</span> <span class="o">+</span> <span class="n">musicCardData</span><span class="o">.</span><span class="na">track</span><span class="o">.</span><span class="na">getAlbumId</span><span class="o">()));</span>
+
+        <span class="n">ControllerData</span> <span class="n">controllerData</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ControllerData</span><span class="o">()</span>
+
+        <span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="n">musicCardData</span><span class="o">.</span><span class="na">playing</span> <span class="o">?</span> <span class="n">PLAYING</span> <span class="o">:</span> <span class="n">PAUSED</span><span class="o">);</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">musicCardData</span><span class="o">.</span><span class="na">currentIndex</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">controllerData</span><span class="o">.</span><span class="na">addFlags</span><span class="o">(</span><span class="n">DISABLE_PREV_BUTTON</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">musicCardData</span><span class="o">.</span><span class="na">currentIndex</span> <span class="o">==</span> <span class="n">musicCardData</span><span class="o">.</span><span class="na">size</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">controllerData</span><span class="o">.</span><span class="na">addFlags</span><span class="o">(</span><span class="n">DISABLE_NEXT_BUTTON</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="n">cardContent</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_4</span><span class="o">,</span> <span class="n">controllerData</span><span class="o">);</span>
+        <span class="n">cardContent</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_5</span><span class="o">,</span>
+
+        <span class="k">new</span> <span class="n">RectData</span><span class="o">().</span><span class="na">setIntent</span><span class="o">(</span><span class="k">new</span> <span class="n">Intent</span><span class="o">().</span><span class="na">setData</span><span class="o">(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&quot;https://www.google.com/search?q=&quot;</span> <span class="o">+</span> <span class="n">musicCardData</span><span class="o">.</span><span class="na">track</span><span class="o">.</span><span class="na">getArtist</span><span class="o">()))));</span>
+
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+
+        <span class="n">cardContent</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">FIELD_4</span><span class="o">,</span> <span class="k">new</span> <span class="n">ControllerData</span><span class="o">().</span><span class="na">addFlags</span><span class="o">(</span><span class="n">DISABLE_PREV_BUTTON</span> <span class="o">|</span> <span class="n">DISABLE_PLAY_BUTTON</span> <span class="o">|</span> <span class="n">DISABLE_NEXT_BUTTON</span><span class="o">));</span>
+
+    <span class="o">}</span>
+
+    <span class="n">CardContentManager</span><span class="o">.</span><span class="na">getInstance</span><span class="o">().</span><span class="na">updateCardContent</span><span class="o">(</span><span class="n">context</span><span class="o">,</span> <span class="n">cardContent</span><span class="o">);</span>
+
+<span class="o">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="appendix-b-card-content-data-types-subtypes-and-values">
+<span id="appendix-b-card-content-data-types-subtypes-and-values"></span><h1>Appendix B. Card Content Data Types, Subtypes, and Values<a class="headerlink" href="#appendix-b-card-content-data-types-subtypes-and-values" title="Permalink to this headline">¶</a></h1>
+<p>In the set of card content data, each element component is assigned a type, a subtype, and a value.</p>
+<p>| <strong>Type</strong>   | <strong>Subtype</strong>                                                  | <strong>Value Description  and Example</strong>                           |
+| ———- | ———————————————————— | ———————————————————— |
+| TEXT       | rawString                                                    | <em>Required</em>  Brief description of the image, action, or   video    “My   news title” |
+| IMAGE      | uriString                                                    | <em>Required</em>  Source of the graphic image     “http://server/img/my_img.png”   “content://provider/img/32” |
+| ACTION     | intent                                                       | <em>Required</em>  Target of the action   “https://www.instagram.com”   “intent:#Intent;action=com.example.action.show_more;S.EXTRA_TYPE=music;end” |
+| intentType | <em>Optional</em>  Type of action   “ACTIVITY”          <em>Default</em>   “BROADCAST” |                                                              |
+| VIDEO      | videoPath                                                    | <em>Required</em>  Source of the video content           “http://sever/video/my_video.mp4”   “file://sdcard/video/my_video.mp4” |
+| seekPos    | <em>Optional</em>  Start of video playback (0 to 3000 ms after   the beginning of video) |                                                              |</p>
+</div>
+<div class="section" id="appendix-c-api-result-codes">
+<span id="appendix-c-api-result-codes"></span><h1>Appendix C. API Result Codes<a class="headerlink" href="#appendix-c-api-result-codes" title="Permalink to this headline">¶</a></h1>
+<p>Whether successful or failed, each API call returns a result code and message.</p>
+<p>| <strong>HTTP Status Code</strong>         | <strong>Result   Code</strong>     | <strong>Result Message</strong>               | <strong>Description</strong>                         |
+| —————————- | ——————— | ——————————– | ————————————— |
+| 200  OK                      | 1000                  | Success                          | API call as   specified was successful. |
+| 400  Bad   Request           | 1001                  | Bad Request                      | Invalid request   protocol              |
+| 1002                         | Bad Request           | Invalid access token             |                                         |
+| 1100                         | Bad Request           | Invalid parameter                |                                         |
+| 1101                         | Bad Request           | Required   parameter is missing. |                                         |
+| 1201                         | Bad Request           | Invalid content   field          |                                         |
+| 1202                         | Bad Request           | Invalid data                     |                                         |
+| 500  Internal   Server Error | 7001                  | Internal Server   Error          | Database error                          |
+| 7999                         | Internal Server Error | System error                     |                                         |</p>
+</div>
+<div class="section" id="appendix-d-bixby-home-countries-regions-and-endpoints">
+<span id="appendix-d-bixby-home-countries-regions-and-endpoints"></span><h1>Appendix D. Bixby Home Countries, Regions, and Endpoints<a class="headerlink" href="#appendix-d-bixby-home-countries-regions-and-endpoints" title="Permalink to this headline">¶</a></h1>
+<p>Bixby Home Server endpoints are located in the regions below that serve the Bixby Home Service countries. Determine the region for your Partner Content Server, and send your Bixby Home Service Open API calls to the region’s endpoint.</p>
+<p>| <strong>Region</strong> | <strong>Bixby Home Server Endpoint</strong>      |
+| ———- | ———————————– |
+| US         | https://us-data-api.samsungfeed.com |
+| Asia       | https://ap-data-api.samsungfeed.com |
+| Europe     | https://eu-data-api.samsungfeed.com |</p>
+<p>| <strong>Region</strong> | <strong>Country</strong>                       | <strong>Region</strong>             | <strong>Country</strong>                                |      |       |
+| ———- | ——————————— | ———————- | —————————————— | —- | —– |
+| US         | AG                                | Antigua and   Barbuda  | US                                         | HT   | Haiti |
+| AI         | Anguilla                          | JM                     | Jamaica                                    |      |       |
+| AN         | Netherlands   Antilles            | KN                     | Saint Kitts and   Nevis                    |      |       |
+| AR         | Argentina                         | KY                     | Cayman Islands                             |      |       |
+| AW         | Aruba                             | LC                     | Saint Lucia                                |      |       |
+| BB         | Barbados                          | MQ                     | Martinique                                 |      |       |
+| BM         | Bermuda                           | MS                     | Montserrat                                 |      |       |
+| BO         | Bolivia                           | MX                     | Mexico                                     |      |       |
+| BR         | Brazil                            | NI                     | Nicaragua                                  |      |       |
+| BS         | Bahamas                           | PA                     | Panama                                     |      |       |
+| BZ         | Belize                            | PE                     | Peru                                       |      |       |
+| CA         | Canada                            | PM                     | Saint Pierre and   Miquelon                |      |       |
+| CL         | Chile                             | PR                     | Puerto Rico                                |      |       |
+| CO         | Colombia                          | PY                     | Paraguay                                   |      |       |
+| CR         | Costa Rica                        | SR                     | Suriname                                   |      |       |
+| CU         | Cuba                              | SV                     | El Salvador                                |      |       |
+| DM         | Dominica                          | TC                     | Turks and Caicos   Islands                 |      |       |
+| DO         | Dominican   Republic              | TT                     | Trinidad and   Tobago                      |      |       |
+| EC         | Ecuador                           | US                     | United States                              |      |       |
+| FK         | Falkland Islands                  | UY                     | Uruguay                                    |      |       |
+| GD         | Grenada                           | VC                     | Saint Vincent and   the Grenadines         |      |       |
+| GF         | French Guiana                     | VE                     | Venezuela                                  |      |       |
+| GL         | Greenland                         | VG                     | British Virgin   Islands                   |      |       |
+| GP         | Guadeloupe                        | VI                     | Virgin Islands                             |      |       |
+| GT         | Guatemala                         |                        |                                            |      |       |
+| GY         | Guyana                            |                        |                                            |      |       |
+| HN         | Honduras                          |                        |                                            |      |       |
+| <strong>Region</strong> | <strong>Country</strong>                       | <strong>Region</strong>             | <strong>Country</strong>                                |      |       |
+| Asia       | AE                                | United Arab   Emirates | Asia                                       | MO   | Macau |
+| AF         | Afghanistan                       | MP                     | Northern Mariana   Islands                 |      |       |
+| AM         | Armenia                           | MV                     | Maldives                                   |      |       |
+| AS         | American Samoa                    | MY                     | Malaysia                                   |      |       |
+| AU         | Australia                         | NC                     | New Caledonia                              |      |       |
+| AZ         | Azerbaijan                        | NF                     | Norfolk Island                             |      |       |
+| BD         | Bangladesh                        | NP                     | Nepal                                      |      |       |
+| BH         | Bahrain                           | NR                     | Nauru                                      |      |       |
+| BN         | Brunei                            | NU                     | Niue                                       |      |       |
+| BT         | Bhutan                            | NZ                     | New Zealand                                |      |       |
+| CC         | Cocos Islands                     | OM                     | Oman                                       |      |       |
+| CK         | Cook Islands                      | PF                     | French Polynesia                           |      |       |
+| CX         | Christmas Island                  | PG                     | Papua New Guinea                           |      |       |
+| CY         | Cyprus                            | PH                     | Philippines                                |      |       |
+| FJ         | Fiji                              | PK                     | Pakistan                                   |      |       |
+| FM         | Micronesia,   Federated States of | PN                     | Pitcairn Islands                           |      |       |
+| GE         | Georgia                           | PW                     | Palau                                      |      |       |
+| GU         | Guam                              | QA                     | Qatar                                      |      |       |
+| HK         | Hong Kong                         | RU                     | Russia                                     |      |       |
+| ID         | Indonesia                         | SA                     | Saudi Arabia                               |      |       |
+| IL         | Israel                            | SB                     | Solomon Islands                            |      |       |
+| IN         | India                             | SG                     | Singapore                                  |      |       |
+| IO         | British Indian   Ocean Territory  | SY                     | Syria                                      |      |       |
+| IQ         | Iraq                              | TH                     | Thailand                                   |      |       |
+| IR         | Iran                              | TJ                     | Tajikistan                                 |      |       |
+| JO         | Jordan                            | TK                     | Tokelau                                    |      |       |
+| JP         | Japan                             | TM                     | Turkmenistan                               |      |       |
+| KG         | Kyrgyzstan                        | TO                     | Tonga                                      |      |       |
+| KH         | Cambodia                          | TP                     | East Timor                                 |      |       |
+| KI         | Kiribati                          | TR                     | Turkey                                     |      |       |
+| KP         | Korea, North                      | TV                     | Tuvalu                                     |      |       |
+| KR         | Korea, South                      | TW                     | Taiwan                                     |      |       |
+| KW         | Kuwait                            | UM                     | United States   Minor Outlying Islands     |      |       |
+| KZ         | Kazakhstan                        | UZ                     | Uzbekistan                                 |      |       |
+| LA         | Laos                              | VN                     | Vietnam                                    |      |       |
+| LB         | Lebanon                           | VU                     | Vanuatu                                    |      |       |
+| LK         | Sri Lanka                         | WF                     | Wallis and Futuna                          |      |       |
+| MH         | Marshall Islands                  | WS                     | Western Samoa                              |      |       |
+| MM         | Myanmar                           | YE                     | Yemen                                      |      |       |
+| MN         | Mongolia                          |                        |                                            |      |       |
+| <strong>Region</strong> | <strong>Country</strong>                       | <strong>Region</strong>             | <strong>Country</strong>                                |      |       |
+| Europe     | AD                                | Andorra                | Europe                                     | EG   | Egypt |
+| AL         | Albania                           | EH                     | Western Sahara                             |      |       |
+| AO         | Angola                            | ER                     | Eritrea                                    |      |       |
+| AQ         | Antarctica                        | ES                     | Spain                                      |      |       |
+| AT         | Austria                           | ET                     | Ethiopia                                   |      |       |
+| BA         | Bosnia and   Herzegovina          | FI                     | Finland                                    |      |       |
+| BE         | Belgium                           | FO                     | Faroe Islands                              |      |       |
+| BF         | Burkina Faso                      | FR                     | France                                     |      |       |
+| BG         | Bulgaria                          | FX                     | France,   Metropolitan                     |      |       |
+| BI         | Burundi                           | GA                     | Gabon                                      |      |       |
+| BJ         | Benin                             | GB                     | United Kingdom                             |      |       |
+| BV         | Bouvet Island                     | GG                     | Guernsey                                   |      |       |
+| BW         | Botswana                          | GH                     | Ghana                                      |      |       |
+| BY         | Belarus                           | GI                     | Gibraltar                                  |      |       |
+| CF         | Central African   Republic        | GM                     | Gambia, The                                |      |       |
+| CG         | Congo, Republic   of the          | GN                     | Guinea                                     |      |       |
+| CH         | Switzerland                       | GQ                     | Equatorial Guinea                          |      |       |
+| CI         | Cote d’Ivoire                     | GR                     | Greece                                     |      |       |
+| CM         | Cameroon                          | GS                     | South Georgia and   South Sandwich Islands |      |       |
+| CV         | Cape Verde                        | GW                     | Guinea-Bissau                              |      |       |
+| CZ         | Czech Republic                    | HM                     | Heard Island and   McDonald Islands        |      |       |
+| DE         | Germany                           | HR                     | Croatia                                    |      |       |
+| DJ         | Djibouti                          | HU                     | Hungary                                    |      |       |
+| DK         | Denmark                           | IE                     | Ireland                                    |      |       |
+| DZ         | Algeria                           | IS                     | Iceland                                    |      |       |
+| EE         | Estonia                           |                        |                                            |      |       |</p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">BixbyHome Guide</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Samsung.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/index.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
