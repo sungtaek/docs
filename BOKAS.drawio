@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2019-10-30T13:32:11.187Z" agent="Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36" etag="37Cj3zvF-1n_He1q_FoX" version="12.1.8" type="github" pages="6">
+<mxfile host="www.draw.io" modified="2019-10-30T13:32:25.200Z" agent="Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36" etag="PaeXoMAGflLMWxa712wY" version="12.1.8" type="github" pages="6">
   <diagram id="cfk2DfzDL__4iRbGQ2eh" name="intro">
     <mxGraphModel dx="1408" dy="748" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -1167,7 +1167,7 @@
         <mxCell id="sqkJYT04Tc6OlSkgpHNs-117" value="SM05. Start&lt;br&gt;Test Session" style="ellipse;whiteSpace=wrap;html=1;shadow=1;gradientColor=none;" parent="OXRSE1_aw0iEWIeeSMvi-1" vertex="1">
           <mxGeometry x="420" y="2862.5" width="140" height="50" as="geometry"/>
         </mxCell>
-        <mxCell id="sqkJYT04Tc6OlSkgpHNs-118" value="SM06. Pause / Resume&lt;br&gt;Test Session" style="ellipse;whiteSpace=wrap;html=1;shadow=1;gradientColor=none;" parent="OXRSE1_aw0iEWIeeSMvi-1" vertex="1">
+        <mxCell id="sqkJYT04Tc6OlSkgpHNs-118" value="SM06. Pause/Resume&lt;br&gt;Test Session" style="ellipse;whiteSpace=wrap;html=1;shadow=1;gradientColor=none;" parent="OXRSE1_aw0iEWIeeSMvi-1" vertex="1">
           <mxGeometry x="417" y="2922.5" width="140" height="50" as="geometry"/>
         </mxCell>
         <mxCell id="sqkJYT04Tc6OlSkgpHNs-119" value="SM07. End&lt;br&gt;Test Session" style="ellipse;whiteSpace=wrap;html=1;shadow=1;gradientColor=none;" parent="OXRSE1_aw0iEWIeeSMvi-1" vertex="1">
