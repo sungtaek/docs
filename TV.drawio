@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2019-10-30T06:28:05.891Z" agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36" etag="QF1s8G-rtCI1HjMTYsW9" version="12.1.8" type="github" pages="6">
+<mxfile host="www.draw.io" modified="2019-10-30T06:35:20.210Z" agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36" etag="ieOxbtDcDbmtsukOVr3o" version="12.1.8" type="github" pages="6">
   <diagram id="t9SCPp3qZgQ9LCUCYkns" name="requirement_function">
     <mxGraphModel dx="854" dy="436" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -135,6 +135,12 @@
       <root>
         <mxCell id="q5XlR-PtI9cxI1lQ9Abi-0"/>
         <mxCell id="q5XlR-PtI9cxI1lQ9Abi-1" parent="q5XlR-PtI9cxI1lQ9Abi-0"/>
+        <mxCell id="1ExetHb4OD4g6JI5gb6c-4" value="&lt;span style=&quot;white-space: normal&quot;&gt;TV가 꺼진 상태에서 사용자가 리모콘의 전원 버튼을 누를때,&lt;/span&gt;&lt;br style=&quot;white-space: normal&quot;&gt;&lt;span style=&quot;white-space: normal&quot;&gt;TV는 3초 이내에 최종 저장된 채널을 보여줘야 한다. (상, 상)&lt;/span&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fontSize=12;align=left;size=17;" vertex="1" parent="q5XlR-PtI9cxI1lQ9Abi-1">
+          <mxGeometry x="70" y="80" width="370" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="1ExetHb4OD4g6JI5gb6c-5" value="TV 시청 중에 사용자 리모콘의 UP 채널 버튼을 누르면&lt;br&gt;TV는 1초 이내에 UP채널을 보여줘야 한다. (중, 상)" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fontSize=12;align=left;size=17;" vertex="1" parent="q5XlR-PtI9cxI1lQ9Abi-1">
+          <mxGeometry x="70" y="170" width="370" height="70" as="geometry"/>
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
