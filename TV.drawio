@@ -1,10 +1,10 @@
-<mxfile host="www.draw.io" modified="2019-10-30T06:27:34.989Z" agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36" etag="TEGsFldQswMx1JFaP5X-" version="12.1.8" type="github" pages="6">
+<mxfile host="www.draw.io" modified="2019-10-30T06:28:05.891Z" agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36" etag="QF1s8G-rtCI1HjMTYsW9" version="12.1.8" type="github" pages="6">
   <diagram id="t9SCPp3qZgQ9LCUCYkns" name="requirement_function">
     <mxGraphModel dx="854" dy="436" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
-        <mxCell id="poNCgdZjSfnXngBSehZM-1" value="TV" style="html=1;align=center;verticalAlign=top;" vertex="1" parent="1">
+        <mxCell id="poNCgdZjSfnXngBSehZM-1" value="TV" style="html=1;align=center;verticalAlign=top;fontStyle=1;fontSize=20;" vertex="1" parent="1">
           <mxGeometry x="170" y="80" width="590" height="480" as="geometry"/>
         </mxCell>
         <mxCell id="poNCgdZjSfnXngBSehZM-2" value="사용자" style="shape=umlActor;verticalLabelPosition=bottom;labelBackgroundColor=#ffffff;verticalAlign=top;html=1;align=left;" vertex="1" parent="1">
