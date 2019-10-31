@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2019-10-31T01:08:33.830Z" agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36" etag="hu72oTAAVMn_Rn35AEIp" version="12.1.9" type="github" pages="7">
+<mxfile host="www.draw.io" modified="2019-10-31T02:13:45.827Z" agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36" etag="6rjA44s4x2wJ0EYO63gQ" version="12.1.9" type="github" pages="7">
   <diagram id="t9SCPp3qZgQ9LCUCYkns" name="requirement_function">
     <mxGraphModel dx="854" dy="436" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -135,38 +135,85 @@
       <root>
         <mxCell id="q5XlR-PtI9cxI1lQ9Abi-0"/>
         <mxCell id="q5XlR-PtI9cxI1lQ9Abi-1" parent="q5XlR-PtI9cxI1lQ9Abi-0"/>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;" edge="1" parent="q5XlR-PtI9cxI1lQ9Abi-1" source="1ExetHb4OD4g6JI5gb6c-14" target="YY3ma4FP-zoHVfOpbm9w-2">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;" edge="1" parent="q5XlR-PtI9cxI1lQ9Abi-1" source="1ExetHb4OD4g6JI5gb6c-14" target="YY3ma4FP-zoHVfOpbm9w-3">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-14" value="&lt;span style=&quot;white-space: normal&quot;&gt;TV 시청 중에 사용자 리모콘의 UP 채널 버튼을 누르면&lt;/span&gt;&lt;br style=&quot;white-space: normal&quot;&gt;&lt;span style=&quot;white-space: normal&quot;&gt;TV는 1초 이내에 UP채널을 보여줘야 한다. (중, 상)&lt;/span&gt;" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#ffcc99;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
           <mxGeometry x="40" y="240" width="390" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;dashed=1;endArrow=classic;endFill=1;" edge="1" parent="q5XlR-PtI9cxI1lQ9Abi-1" source="1ExetHb4OD4g6JI5gb6c-15" target="YY3ma4FP-zoHVfOpbm9w-4">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-15" value="TV가 꺼진 상태에서 사용자가 리모콘의 전원 버튼을 누를때,&lt;br&gt;TV는 3초 이내에 최종 저장된 채널을 보여줘야 한다. (상, 상)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#ffcc99;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
           <mxGeometry x="40" y="60" width="392" height="60" as="geometry"/>
         </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;" edge="1" parent="q5XlR-PtI9cxI1lQ9Abi-1" source="1ExetHb4OD4g6JI5gb6c-16" target="YY3ma4FP-zoHVfOpbm9w-5">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;" edge="1" parent="q5XlR-PtI9cxI1lQ9Abi-1" source="1ExetHb4OD4g6JI5gb6c-16" target="YY3ma4FP-zoHVfOpbm9w-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="360"/>
+              <mxPoint x="480" y="429"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-16" value="상품 기획팀에 이집트에 TV를 출시하고자 할때,&lt;br&gt;개발팀은 1개의 컴포너트만 수정하여 이집트 주파수 테이블로&lt;br&gt;변경할 수 있어야 한다. (중, 중)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#ffff88;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
           <mxGeometry x="41" y="330" width="390" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;dashed=1;endArrow=classic;endFill=1;" edge="1" parent="q5XlR-PtI9cxI1lQ9Abi-1" source="1ExetHb4OD4g6JI5gb6c-17" target="YY3ma4FP-zoHVfOpbm9w-0">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;endArrow=classic;endFill=1;" edge="1" parent="q5XlR-PtI9cxI1lQ9Abi-1" source="1ExetHb4OD4g6JI5gb6c-17" target="YY3ma4FP-zoHVfOpbm9w-1">
+          <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-17" value="TV가 고장나서 AS 기사를 불렀을때,&lt;br&gt;AS 기사는 10분 이내에 TV의 오류원인을 알아내고,&lt;br&gt;TV를 정상 작동 시킬수 있어야 한다. (상, 상)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#cce5ff;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
           <mxGeometry x="40" y="150" width="392" height="60" as="geometry"/>
         </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-18" value="UX팀이 사용자 인터페이스의 폰트 색상을 변경 요청을하면,&lt;br&gt;개발팀은 변경을 적용한 TV 소프트웨어를&lt;br&gt;1주일 안에&amp;nbsp;릴리즈 해야한다. (중, 중)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#ffff88;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
-          <mxGeometry x="490" y="410" width="392" height="60" as="geometry"/>
+          <mxGeometry x="38" y="860" width="392" height="60" as="geometry"/>
         </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-19" value="하드웨어팀이 TV 하드웨어를 변경하면,&lt;br&gt;개발팀은 변경된 하드웨어에 TV 소프트웨어를&lt;br&gt;1주일 안에 릴리즈 해야한다. (중, 상)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#ffff88;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
-          <mxGeometry x="490" y="130" width="392" height="60" as="geometry"/>
+          <mxGeometry x="38" y="580" width="392" height="60" as="geometry"/>
         </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-20" value="상품 기획에서 시장에 맞는 제품 개발을 요구하면,&lt;br&gt;개발팀은 요구 사항을 적용한 TV 제품을&lt;br&gt;2개월 안에 릴리즈 한다. (중, 상)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#ffff88;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
-          <mxGeometry x="490" y="200" width="392" height="60" as="geometry"/>
+          <mxGeometry x="38" y="650" width="392" height="60" as="geometry"/>
         </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-22" value="사용자가 UP버튼을 0.5초 이상 누르고 있으면,&lt;br&gt;시스템은 0.2초 주기로 연속적으로 UP 채널로 채널을 변경하며,&lt;br&gt;사용자가 UP 버튼을 떼는 순간 채널변경을 멈춰야 한다. (상, 상)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#ffcc99;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
-          <mxGeometry x="490" y="60" width="392" height="60" as="geometry"/>
+          <mxGeometry x="38" y="510" width="392" height="60" as="geometry"/>
         </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-23" value="하드웨어 팀이 신규 기능을 탑재된 하드웨어로 변경하면,&lt;br&gt;개발팀은 해당 기능에 따른 사용자 인터페이스 변경을&lt;br&gt;1개월 이내에 반영하여 릴리즈 한다. (중, 중)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#ffff88;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
-          <mxGeometry x="490" y="480" width="392" height="60" as="geometry"/>
+          <mxGeometry x="38" y="930" width="392" height="60" as="geometry"/>
         </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-24" value="사용자가 TV를 시청하는 도중, 채널 변경이나 음량조절시&lt;br&gt;3번 이내의 리모컨 조작으로 수행이 되어야 한다. (상, 중)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#cdeb8b;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
-          <mxGeometry x="490" y="340" width="392" height="60" as="geometry"/>
+          <mxGeometry x="38" y="790" width="392" height="60" as="geometry"/>
         </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-25" value="상품기획이 PIP 기능의 추가를 요청하면,&lt;br&gt;개발팀은 PIP 기능을 탑재한 TV 제품을&lt;br&gt;1개월 이내에 릴리즈 한다. (중, 상)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#ffff88;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
-          <mxGeometry x="490" y="270" width="392" height="60" as="geometry"/>
+          <mxGeometry x="38" y="720" width="392" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-0" value="Exception 처리" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;" vertex="1" parent="q5XlR-PtI9cxI1lQ9Abi-1">
+          <mxGeometry x="530" y="111" width="110" height="39" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-1" value="WatchDog" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;" vertex="1" parent="q5XlR-PtI9cxI1lQ9Abi-1">
+          <mxGeometry x="530" y="171" width="110" height="39" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-2" value="Caching" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;" vertex="1" parent="q5XlR-PtI9cxI1lQ9Abi-1">
+          <mxGeometry x="530" y="231" width="110" height="39" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-3" value="Tuner&lt;br&gt;redanduncy" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;" vertex="1" parent="q5XlR-PtI9cxI1lQ9Abi-1">
+          <mxGeometry x="530" y="291" width="110" height="39" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-4" value="Feature1" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;" vertex="1" parent="q5XlR-PtI9cxI1lQ9Abi-1">
+          <mxGeometry x="530" y="60" width="110" height="39" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-5" value="Polymorphism" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;" vertex="1" parent="q5XlR-PtI9cxI1lQ9Abi-1">
+          <mxGeometry x="530" y="350" width="110" height="39" as="geometry"/>
+        </mxCell>
+        <mxCell id="YY3ma4FP-zoHVfOpbm9w-6" value="Configuration" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;" vertex="1" parent="q5XlR-PtI9cxI1lQ9Abi-1">
+          <mxGeometry x="530" y="409" width="110" height="39" as="geometry"/>
         </mxCell>
       </root>
     </mxGraphModel>
