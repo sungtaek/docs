@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2019-10-31T02:13:45.827Z" agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36" etag="6rjA44s4x2wJ0EYO63gQ" version="12.1.9" type="github" pages="7">
+<mxfile host="www.draw.io" modified="2019-10-31T08:33:32.723Z" agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36" etag="NBdlvk28cDdOox_20m4A" version="12.1.9" type="github" pages="7">
   <diagram id="t9SCPp3qZgQ9LCUCYkns" name="requirement_function">
     <mxGraphModel dx="854" dy="436" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -183,7 +183,7 @@
           <mxGeometry x="38" y="650" width="392" height="60" as="geometry"/>
         </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-22" value="사용자가 UP버튼을 0.5초 이상 누르고 있으면,&lt;br&gt;시스템은 0.2초 주기로 연속적으로 UP 채널로 채널을 변경하며,&lt;br&gt;사용자가 UP 버튼을 떼는 순간 채널변경을 멈춰야 한다. (상, 상)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#ffcc99;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
-          <mxGeometry x="38" y="510" width="392" height="60" as="geometry"/>
+          <mxGeometry x="21" y="510" width="392" height="60" as="geometry"/>
         </mxCell>
         <mxCell id="1ExetHb4OD4g6JI5gb6c-23" value="하드웨어 팀이 신규 기능을 탑재된 하드웨어로 변경하면,&lt;br&gt;개발팀은 해당 기능에 따른 사용자 인터페이스 변경을&lt;br&gt;1개월 이내에 반영하여 릴리즈 한다. (중, 중)" style="shape=note;whiteSpace=wrap;html=1;size=14;verticalAlign=top;align=left;spacingTop=-6;fontSize=12;fillColor=#ffff88;strokeColor=#36393d;" parent="q5XlR-PtI9cxI1lQ9Abi-1" vertex="1">
           <mxGeometry x="38" y="930" width="392" height="60" as="geometry"/>
