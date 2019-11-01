@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2019-11-01T00:53:46.683Z" agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36" etag="27kBKbdECWeDsje85Exi" version="12.1.9" type="github" pages="1">
+<mxfile host="www.draw.io" modified="2019-11-01T00:53:56.225Z" agent="Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36" etag="wF3KP1vg5V9NuXkHXosE" version="12.1.9" type="github" pages="1">
   <diagram id="GqkaJM9YWcRdEgWwe7jv" name="Page-1">
     <mxGraphModel dx="854" dy="436" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -167,7 +167,7 @@
           <mxGeometry x="160" y="890" width="120" height="60" as="geometry"/>
         </mxCell>
         <mxCell id="NLvDaeGnBo0QT0uKcd2r-51" value="Hardware Adaptor" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;verticalAlign=top;align=left;" vertex="1" parent="1">
-          <mxGeometry x="90" y="1000" width="700" height="90" as="geometry"/>
+          <mxGeometry x="90" y="1000" width="700" height="100" as="geometry"/>
         </mxCell>
         <mxCell id="NLvDaeGnBo0QT0uKcd2r-52" value="Display Terminal" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="160" y="1045" width="120" height="35" as="geometry"/>
