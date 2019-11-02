@@ -1,4 +1,4 @@
-<mxfile host="www.draw.io" modified="2019-11-02T18:03:57.829Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36" etag="y24qXmjHUUWO2d2OzE6P" version="12.1.9" type="github" pages="9">
+<mxfile host="www.draw.io" modified="2019-11-02T18:26:39.008Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36" etag="YbRT4snXPzhhvhlLo8US" version="12.1.9" type="github" pages="9">
   <diagram id="cfk2DfzDL__4iRbGQ2eh" name="intro">
     <mxGraphModel dx="1168" dy="669" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -4839,7 +4839,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="TVQFmRPmylX5h-hPrPGD" name="behavioral_view">
-    <mxGraphModel dx="1947" dy="1197" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="556" dy="342" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="Te6URj1XBP9EJkhqoI15-0"/>
         <mxCell id="Te6URj1XBP9EJkhqoI15-1" parent="Te6URj1XBP9EJkhqoI15-0"/>
@@ -4917,8 +4917,8 @@
         <mxCell id="J-rqxMd33vxSV9kBZg9T-17" value="Activity: Manage&lt;br&gt;Test Session" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="Te6URj1XBP9EJkhqoI15-1">
           <mxGeometry x="240" y="585" width="120" height="40" as="geometry"/>
         </mxCell>
-        <mxCell id="J-rqxMd33vxSV9kBZg9T-18" value="Activity: Progress&lt;br&gt;Test Session" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="Te6URj1XBP9EJkhqoI15-1">
-          <mxGeometry x="455" y="536.5" width="120" height="40" as="geometry"/>
+        <mxCell id="J-rqxMd33vxSV9kBZg9T-18" value="Activity: Progress&lt;br&gt;Test Session&lt;br&gt;&amp;amp; Test Item" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="Te6URj1XBP9EJkhqoI15-1">
+          <mxGeometry x="455" y="537" width="120" height="54" as="geometry"/>
         </mxCell>
         <mxCell id="J-rqxMd33vxSV9kBZg9T-19" value="Activity: Generate&lt;br&gt;Report" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="Te6URj1XBP9EJkhqoI15-1">
           <mxGeometry x="59.5" y="635.5" width="120" height="40" as="geometry"/>
@@ -5286,7 +5286,7 @@
             <Array as="points">
               <mxPoint x="470" y="410"/>
               <mxPoint x="595" y="410"/>
-              <mxPoint x="595" y="557"/>
+              <mxPoint x="595" y="564"/>
             </Array>
           </mxGeometry>
         </mxCell>
@@ -5295,7 +5295,7 @@
             <mxPoint x="585" y="567" as="targetPoint"/>
             <mxPoint x="513" y="389" as="sourcePoint"/>
             <Array as="points">
-              <mxPoint x="435" y="557"/>
+              <mxPoint x="435" y="564"/>
             </Array>
           </mxGeometry>
         </mxCell>
@@ -5519,6 +5519,28 @@
               <mxPoint x="507" y="800"/>
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="J-rqxMd33vxSV9kBZg9T-149" value="" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" vertex="1" parent="Te6URj1XBP9EJkhqoI15-1">
+          <mxGeometry x="300" y="1090" width="30" height="30" as="geometry"/>
+        </mxCell>
+        <mxCell id="J-rqxMd33vxSV9kBZg9T-150" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;" edge="1" parent="Te6URj1XBP9EJkhqoI15-1" source="J-rqxMd33vxSV9kBZg9T-149">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="315" y="1163" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J-rqxMd33vxSV9kBZg9T-151" value="Start&lt;br&gt;Test Session" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="Te6URj1XBP9EJkhqoI15-1">
+          <mxGeometry x="255" y="1180" width="120" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="J-rqxMd33vxSV9kBZg9T-152" value="" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;" edge="1" source="J-rqxMd33vxSV9kBZg9T-151" parent="Te6URj1XBP9EJkhqoI15-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="315" y="1270" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J-rqxMd33vxSV9kBZg9T-153" value="Choose&lt;br&gt;Trainee" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="Te6URj1XBP9EJkhqoI15-1">
+          <mxGeometry x="255" y="1290" width="120" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="J-rqxMd33vxSV9kBZg9T-154" value="Run&lt;br&gt;Evaluation" style="rounded=1;whiteSpace=wrap;html=1;arcSize=40;fontColor=#000000;fillColor=#ffffc0;strokeColor=#ff0000;" vertex="1" parent="Te6URj1XBP9EJkhqoI15-1">
+          <mxGeometry x="310" y="1380" width="120" height="40" as="geometry"/>
         </mxCell>
       </root>
     </mxGraphModel>
